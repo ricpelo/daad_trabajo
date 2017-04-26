@@ -1,0 +1,1 @@
+JavaCPC.exe -desktop yes -wallpaper "wallpaper/fantasy.jpg" -stretch no -cpctype CPC6128 -drivea "alpha1.dsk" -boot df0 -amsdos yes

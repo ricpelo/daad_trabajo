@@ -1,0 +1,515 @@
+;
+; TEMPLOS - Mensajes comunes a ambas partes (m s o menos).
+;
+; 09-12-90
+; ========
+;
+;________________________________________________________________________
+/STX                    ;Mensajes del sistema
+;
+/0              ; oscuridad
+#if DARK
+ ; Est s en una de las famosas e inevitables localidades oscuras. No ves nada.
+ Est  muy oscuro para distinguir nada.
+
+#endif
+/1
+Tambi‚n puedes ver\s
+/2      ; prompt vac¡o
+/3      ; mensaje para salidas
+ir al\s
+#define FSS 4
+/4      ; mensaje para salidas
+.\s
+#define DarkS 5
+/5      ; No hay Luz, descripc¡on CORTA (no darkness in part2)
+#if DARK
+ Oscuro
+#endif
+/6      ;acci¢n inutil
+Innecesario en esta aventura.
+
+/7      ; mensaje para salidas
+No puedes\s
+#define UCantS 8
+/UCantS
+No puedes hacerlo.
+
+/9
+Tienes\s
+/10
+No tienes nada.
+
+/11
+Tienes puesto\s
+/12
+?\s(Si/No)
+/13
+
+¨Lo intentas otra vez?\s(Si/No)
+/14 ; - this is said by characters
+Adios...
+/15
+Vale.
+
+/16
+;
+;Pulsa una tecla para seguir.
+/17 ;Has hecho\s
+Turno:\s
+/18
+¨Est s seguro
+/19 ;  When you try to light something without a match
+/20 ; - If you need something to attack a person.
+­Hombre! S¢lo con tus manos, ni hablar.
+
+/21 ; Puntuaci¢n:\s
+/22 ; %
+/23
+No lo llevas puesto.
+
+/24
+No puedes. Llevas _.
+
+/25
+Ya tienes _.
+
+/26
+­No est  a tu alcance!
+
+/27
+Llevas tantos cacharros que _ se te escapa de las manos.
+
+/28
+Pero... ­si no lo tienes!
+
+/29
+Ya llevas _.
+
+/30                                     ; Cuando dices que s¡.
+S
+/31                                     ; Cuando dices que no.
+N
+/32
+m s...
+/33                                     ; Prompt
+
+>\s
+#define AlS 34
+/AlS
+#IF PART1
+ al\s
+#ENDIF
+/35 ; Used for sleeping so no CR at start
+El tiempo pasa...
+
+/36
+Coges _.
+
+/37
+Te pones _.
+
+/38
+Te quitas _.
+
+/39
+Dejas _.
+
+/40
+No puedes ponerte _.
+
+/41
+No puedes quitarte _.
+
+/42
+No puedes quitarte _, porque tienes las manos llenas.
+
+/43
+@ pesa demasiado y se escapa de las manos.
+
+/44
+@ est  en\s
+/45
+
+@ no est  en\s
+/46
+,\s
+/47
+\sy\s
+/48
+.\s
+/49
+No tienes _.
+
+/50
+@ no lo llevas.
+
+#define FSNL 51
+/51
+.
+
+/52
+No hay nada de eso en\s
+/53     ; no hay nada dentro contenedor
+aire.
+
+#if DISKTAPE
+ /54 ; Inicial de Cinta
+ C
+ /55 ; Inicial de Disco
+ D
+#else
+ /54
+ /55
+#endif
+/56
+#if DISK
+ Disco no preparado. Pulsa tecla para repetir.
+
+#endif
+/57 ; - this could be shorter?
+Error de entrada/salida.
+
+/58  ; disco o directorio lleno
+#if DISK
+ Disco lleno o protegido.
+
+#endif
+/59
+#if !S48
+ ;We know spectrum does not need this and we need the memory
+ Nombre err¢neo.
+
+#endif
+/60
+Nombre del fichero:
+/61
+#if TAPE
+ Prepara la cinta...
+
+#endif
+/62
+#if DISKTAPE
+ ¨Cinta o Disco? (C/D)
+#endif
+/63
+/64
+#define FS 65
+/65
+.
+/66 ;No hay nadie con quien hablar.
+Dir¡gete a alguien para hablar.
+
+#define PS 67
+/67
+s
+#define ICS 68
+/ICS
+".
+#define ICSNL 69
+/ICSNL
+".
+
+/70 ; When the PSI is not here or its a PSI that doesn't exist.
+Pero... si no est .
+
+/71 ; Drinking yourself
+Bebes\s
+#define NoHaveS 72
+/NoHaveS  ;pides a un psi algo que no tiene &&a
+Pero si no tengo eso
+/73 ;  - When something is already closed
+Ya est  cerrad
+#define MWFTSS 74
+/74 ; - when a character looks at you (i.e. it understood the verb
+; but not the phrase, this is different to WADYASAY-127 because that
+; is given if the phrase is shit, i.e. no verb)
+ te mira con extra¤eza.
+
+/75 ; Empty containers and Liquid containers
+Est  vac¡
+#define YaTengoS 76
+/YaTengoS ;Espinas de cactus, por ejemplo.
+#IF PART1
+ Ya has cogido una.
+
+#ELSE
+ Ya has cogido unas cuantas.
+
+#ENDIF
+/YaTengoS+1 ;Balsa.
+Ya has hecho una.
+
+/78 ;  if there is nothing in a container (specially checked)
+Est  vac¡
+/79 ; If there is anything in a container
+Dentro hay\s
+/80 ;repites acci¢n (como atar la liana dos veces a lo mismo)
+#IF PART1
+ ­Ya has hecho eso!
+
+#ENDIF
+#define ExamS   81
+/81
+@ no tiene nada especialmente interesante
+/82 ; Mueres envenenado     del 82 al 85 son nuevos
+#IF PART1
+ Tienes una intoxicaci¢n de aupa. Poco a poco pasas a mejor vida.
+
+#ENDIF
+/83 ;Mueres ahogado
+Las fuerzas te abandonan. No puedes seguir nadando. Te ahogas.
+
+#define DoinItS 84
+/DoinItS ;p.ej decirle que nade en el cenote
+#IF PART1
+ ­Ya lo est s haciendo!
+
+#ENDIF
+#define CualS DoinItS+1
+/CualS
+¨Cu l?
+
+/86 ; Trying to put a large object in a small container
+@ no cabe en
+#define SUFS 87
+/SUFS
+\s_.
+#define U 88
+/U
+_
+/89 ;FREE
+#define PN 90
+/90
+n
+#IF PART1
+ #define AqueS 91
+ /AqueS
+ ¨A qu‚?
+
+ #define DequeS 92
+ /DequeS
+ ¨De qu‚?
+
+#ELSE
+ /91
+ /92
+#ENDIF
+#define OpenS 93
+/OpenS ; When you open an object
+Abres _.
+
+/94
+#define CloseS 95
+/CloseS ; When you close it (always has a CR)
+Cierras _.
+
+#define GEx 96
+/GEx ;examina general para lo que no tiene examinas &as &andy
+No le ves nada de particular.
+
+#define SaltoS 97
+/SaltoS    
+#IF PART1
+ Dando un salto te lanzas al vac¡o.
+
+
+#ENDIF
+/98 ; When something is closed (may be an object or not)
+Est  cerrad
+/99
+#define UFS 100
+/100
+_.
+#define UFSNL 101
+/101
+_.
+
+#define FA 102
+/102
+a
+#define MO 103
+/103
+o
+/104 ; When a container we need to name is closed
+@ est  cerrad
+#if PART1
+ /105 ;FREE
+ #define MaloS 106
+ /MaloS    ;dos mensajes que salen si comes algo malo    
+ Parece que no te encuentras muy bien.
+
+ /MaloS+1  ;el anterior sale una vez, este sale a cada turno    
+ Te encuentras francamente mal.
+
+#else
+ /105 ;No puedes en Parte II. Igual que el 7, pero con punto final.
+ No puedes.\s
+ /106           ;Si intenta coger el cajon de la mesa.
+ El caj¢n est  fijo.
+
+ /107 ;
+#endif
+/108 ; PSI will ignore you (e.g. if angry)
+#if     PART2
+ \ste mira con enfado.
+
+#endif
+/109 ; When she speaks (her name is used if we know it)
+\sdice: "
+/110 ;para 'est  atada a _'
+#IF PART1
+ a _
+#ENDIF
+/111 ;un psi (Indio en part1, diosa en p2) no quiere lo que le das    
+@ no me interesa
+#define FSKB 112
+/FSKB
+.\k\b
+#define GivesS 113
+/GivesS ;un PSI te da algo &&a
+#IF PART1
+  te da _.\s
+#ENDIF
+#define MEDIJO 114
+/114 ; When a character replies to you
+ te dice: "
+#define Spaces 115
+/115 ; Borra la ventana de la Short Desc.
+#if PART1
+ \s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s
+#else
+ \s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s
+#endif
+#define MeniegoS 116
+/MeniegoS ;tirar el contrato por la borda, por ejemplo &&a
+­Ni hablar!
+
+/117    ;Un PSI te da las gracias
+Gracias
+/118    ;
+/119 ; When something is already open (could be an object or not so no _)
+Ya est  abiert
+#IF PART1
+ #define LoroS 120
+ /LoroS    ;Estos tres mensajes van precedidos de 'Kuill'    
+ \ste ignora
+ /LoroS+1  ; si le das el gusano    
+ \sse come el gusano
+ /LoroS+2  ; le das la papaya     ten en cuenta que se la puedes dar + de 1 vez
+ \sno se muestra muy entusiasmado por _
+ /LoroS+3 ; intentas matar al loro    
+ \shuye despavorido
+#ELSE
+ /120  ;Precede a las respuestas de Xtabai. Depender  de que sepa su nombre.
+ La mujer
+ #DEFINE XTAB 121
+ /121   ;
+ Xtabai
+ #define DESCMESA2 122
+ /DESCMESA2
+ Sobre la mesa ves\s
+ /123 ;FREE
+#ENDIF
+/124 ; Any PSI name is given by
+;Me llamo\s
+/125 ; Its open message
+Est  abiert
+#define HowS 126 ;the acieeed label!
+/HowS ;
+ ¨C¢mo?
+
+#define WADYASAY 127
+/127 ; When a PSI doesn't understand
+No te entiende.
+
+#IF PART1
+ #define AlredS 128
+ /AlredS ;para 'est  atada alrededor de _ y de _'
+ alrededor\s
+ /AlredS+1 ;para 'est  atada alrededor de _ y de _'
+ d
+#ELSE
+ #DEFINE        VACIO 128
+ /128 ;FREE
+ Est  vac¡o.
+ #DEFINE        DONDE 129
+ /129 ;
+ ¨D¢nde?
+
+#ENDIF
+/130 ;  - Eating something
+Te zampas _.
+
+/131 ;  - If it will poison you it tastes bad (also drink)
+­Iaahg! Vaya porquer¡a de sabor.
+
+/132 ;Si llevas muchos trastos, no puedes subir a la escalera.
+No puedes. Llevas muchos trastos.
+
+/133 ;FREE
+/134 ;FREE
+/135 ; gracias to a PSI
+De nada
+/136
+#define NFSYSM 137
+#define SM NFSYSM
+;
+; Exits
+;
+/SM ; tabla salidas
+No hay ninguna salida
+/SM+1
+Las salidas posibles son\s
+/SM+2
+.
+
+/SM+3
+,\s
+/SM+4
+\sy\s
+/SM+5
+La £nica salida es\s
+/SM+6
+Norte
+/SM+7
+Sur
+/SM+8
+Este
+/SM+9
+Oeste
+/SM+10
+Noreste
+/SM+11
+Noroeste
+/SM+12
+Sureste
+/SM+13
+Suroeste
+/SM+14 ;&&a
+subir
+/SM+15 ;&&a
+bajar
+/SM+16 ;&&a
+entrar
+/SM+17 ;&&a
+salir
+/SM+18 ;&&a
+saltar
+;
+; PSI's
+;
+#define PM SM+19 ;&&a
+/PM
+Aqu¡ est \s
+/PM+1
+Aqu¡ est n\s
+/PM+2
+.\s
+/PM+3
+,\s
+/PM+4
+\sy\s
+/PM+5
+Hablas con\s
+

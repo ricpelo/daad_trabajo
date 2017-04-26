@@ -1,0 +1,197 @@
+^BackSpace   DeleteLeftWord
+*
+*  This is a WordStar (R) 'look-a-like' configuration file for QEDIT.
+*
+^A           WordLeft
+*
+* start of a TwoKey block
+*
+^B           TwoKey
+4
+A            AppendScrBuff
+L            LoadScrBuff
+S            StoreScrBuff
+Z            ZapScrBuff
+*
+* return to single key commands
+*
+^C           PgDn
+^D           CursorRight
+^E           CursorUp
+^F           WordRight
+^G           DeleteChar
+^H           BackSpace
+BackSpace    BackSpace
+^I           TabRight
+Tab          TabRight
+^J           JumpToLine
+*
+* start of a TwoKey block
+*
+^K           TwoKey
+17
+B            MarkLine
+C            CopyBlock
+D            FileToMain
+E            EditFile
+F            FileidChange
+K            MarkLine
+N            NextFile
+P            PrevFile
+Q            PQuitToSystem
+R            ReadFile
+S            SaveFile
+T            SetTabWidth
+V            MoveBlock
+W            WriteBlock
+X            FileToSystem
+Y            GroupDelete
+Z            KillFile
+*
+* return to single key commands
+*
+^L           RepLastFindOrRepl
+^M           Return
+Return       Return
+^N           SplitLine
+ 
+^O                       TwoKey
+4
+N                        NextWindow
+P                        PrevWindow
+S                        SplitScreen
+1                        OneWindow
+ 
+^P
+*
+* start of a TwoKey block
+*
+^Q           TwoKey
+13
+A            Replace
+C            BottomOfFile
+D            EndOfLine
+E            TopOfScreen
+F            Find
+I            ToggleAutoIndent
+L            UnDoCursorLine
+P
+R            TopOfFile
+S            FirstOfLine
+T            ToggleTabsExpand
+X            BottomOfScreen
+Y            DeleteToEOL
+*
+* return to single key commands
+*
+^R           PgUp
+^S           CursorLeft
+^T           DeleteRightWord
+^U
+^V           ToggleIns
+^W           ScrollUp
+^X           CursorDown
+^Y           DeleteLine
+^Z           ScrollDown
+Esc          Escape
+^\
+^]
+^6
+^-
+^2
+Shift-Tab    TabLeft
+Alt-Q        Exit
+Alt-W        WriteBlock
+Alt-E        EditFile
+Alt-R        Readfile
+Alt-T
+Alt-Y
+Alt-U        UnMarkBlock
+Alt-I
+Alt-O
+Alt-P
+Alt-A        Align
+Alt-S
+Alt-D        DeleteLine
+Alt-F
+Alt-G        GroupDelete
+Alt-H
+Alt-J
+Alt-K
+Alt-L        MarkLine
+Alt-Z
+Alt-X        GExit
+Alt-C        CopyBlock
+Alt-V
+Alt-B
+Alt-N
+Alt-M        MoveBlock
+F1
+F2           AddLine
+F3           PQuitToMain
+F4           DupLine
+F5           MakeTopOfScreen
+F6           DeleteToEOL
+F7
+F8
+F9           Shell
+F10
+Home         FirstOfLine
+UpArrow      CursorUp
+PgUp         PgUp
+LeftArrow    CursorLeft
+RightArrow   CursorRight
+End          EndOfLine
+DownArrow    CursorDown
+PgDn         PgDn
+Ins          ToggleIns
+Del          DeleteChar
+Shift-F1
+Shift-F2
+Shift-F3
+Shift-F4
+Shift-F5
+Shift-F6
+Shift-F7           ShiftLeft
+Shift-F8           ShiftRight
+Shift-F9
+Shift-F10
+^F1
+^F2
+^F3
+^F4
+^F5
+^F6
+^F7
+^F8
+^F9
+^F10
+Alt-F1
+Alt-F2
+Alt-F3
+Alt-F4
+Alt-F5
+Alt-F6
+Alt-F7
+Alt-F8
+Alt-F9
+Alt-F10
+^LeftArrow   WordLeft
+^RightArrow  WordRight
+^End         BottomOfScreen
+^PgDn        BottomOfFile
+^Home        TopOfScreen
+Alt-1
+Alt-2
+Alt-3
+Alt-4
+Alt-5
+Alt-6
+Alt-7
+Alt-8
+Alt-9
+Alt-0
+Alt--
+Alt-=
+^PgUp        TopOfFile
+

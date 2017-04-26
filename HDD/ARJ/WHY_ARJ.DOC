@@ -1,0 +1,115 @@
+
+     WHY_ARJ.DOC					     July 1991
+
+
+     This document describes the benefits of ARJ.  Pardon the commercial.
+     Compression benchmark results are at the end of this document.
+
+
+     1)  ARJ provides superior size compression to the other products
+	 currently available on the PC.  In a few particular cases, other
+	 archivers may produce slightly smaller archives than ARJ.
+
+	 ARJ is particularly strong compressing databases, uncompressed
+	 graphics files, and large documents.  One user reported that in
+	 compressing a 9.0 megabyte database, PKZIP produced a compressed
+	 file of size 1.8 megabytes, and ARJ produced a compressed file of
+	 size 1.1 megabytes.
+
+     2)  Of PKZIP, LHArc, PAK, ARC, ARJ, and HYPER, only ARJ provides the
+	 capability of archiving files to multiple volume archives.  In
+	 other words, ARJ can archive files directly to diskettes no matter
+	 how large or how numerous the input files are.
+
+	 It is possible to archive a 10 megabyte file to several diskettes
+	 and to recover the file directly from the diskettes.  Other
+	 archivers require that you compress the large file to hard disk
+	 or large RAM drive and then slice the compressed file to fit on
+	 diskettes.  To recover the original file involves reassembling the
+	 compressed file on the hard disk from the diskettes and then
+	 extracting the original file from the reassembled compressed file.
+	 This option is not even possible if you lack the hard disk space.
+
+	 This feature makes ARJ especially suitable for distributing large
+	 software packages without the concerns about fitting entire files
+	 on one diskette.  ARJ will automatically split files when
+	 necessary and will reassemble them upon extraction without using
+	 any extra disk space.
+
+	 This multiple volume feature of ARJ makes it suitable as a "poor
+	 man's" backup utility.  ARJ saves pathname information, file
+	 date-time stamps, and file attributes in the archive volumes.	ARJ
+	 can also create an index file with information about the contents
+	 of each volume.  Files contained entirely within one volume are
+	 easily extracted using just the one volume.
+
+     3)  ARJ provides the facility to store EMPTY directories within its
+	 archives.  This makes it easier to do FULL backups and also to
+	 distribute software products that come with EMPTY directories.
+
+     4)  Both ARJ self-extracting modules provide default pathname support.
+	 That means that you can build self-extracting archives of software
+	 directories containing sub-directories.  The end user of the
+	 self-extracting archive does not have to type any command line
+	 options to restore the full directory structure of the software.
+	 This greatly simplifies software distribution.
+
+     5)  The ARJ archive data structure with its header structure and 32
+	 bit CRC provide excellent archive stability and recovery
+	 capabilities.
+
+     6)  ARJ provides a security envelope facility to "lock" ARJ archives.
+	 A "locked" ARJ archive cannot be modified by ARJ.  This provides
+	 some level of assurance to the user receiving a "locked" ARJ
+	 archive that the contents of the archive have not been tampered
+	 with.	Data integrity checks contribute to the security of the
+	 ARJ "lock".
+
+     7)  The myriad number of ARJ commands and options allow the user
+	 outstanding flexibility in archiver usage.
+
+     8)  You will also receive strong technical support from a software
+	 author with many years of experience in software technical
+	 support.
+
+
+
+     COMPRESSION COMPARISON TEST RESULTS		June 28, 1991
+
+
+     This benchmark archiver test uses the original PKZIP 1.10 distribution
+     archive, PKZ110.EXE, as the base data to compress.  The PKZIP 1.10
+     distribution archive totals 302196 bytes.
+
+
+     ARCHIVER		PACKED SIZE   COMPRESS TIME   EXTRACT TIME
+     ----------------	-----------   -------------   ------------
+
+     ARJ   2.10  -m4	  145374	  1:30.9	 0:52.0
+     ARJ   2.20  -m4	  144802	  1:07.7	 0:46.8
+
+     PAK   2.51 	  138309	  2:26.2	 0:53.0
+     LHARC 1.13c	  137450	  4:05.7	 1:46.1
+     HYPER 2.50 	  136543	  2:30.4	 1:54.7
+     PKZIP 1.10 	  136245	  2:12.0	 0:34.5
+
+     ARJ   2.10  -m3	  135185	  1:47.2	 0:52.1
+     ARJ   2.20  -m3	  132441	  1:30.4	 0:48.5
+
+     ARJ   2.20  -m2	  130994	  1:49.5	 0:48.1
+     LHA   2.12 	  130606	  2:39.1	 0:50.4
+
+     ARJ   2.20 [-m1]	  129002	  2:14.0	 0:47.7
+     ARJ   2.20  -jm1	  128114	  2:33.0	 0.47.6
+     ARJ   2.20  -jm	  127992	  3:51.8	 0.47.6
+
+
+     ARJ 2.20 produced the best COMPRESSION SPEED and COMPRESSION SIZE
+     results in this test.  PKZIP had the fastest EXTRACTION SPEED.
+
+     This test was run on a 8 MHz 8088 PC with 20 MB hard drive and 512 K
+     ram.  The archives were created on and extracted from a ram disk.
+
+     end document
+
+

@@ -1,0 +1,5 @@
+Los ficheros .Z80 son rutinas en c¢digo m quina para Z80 obtenidas con un
+ensamblador cruzado. Son s¢lo un ejemplo de c¢mo se incluye una rutina en
+CM en el DAAD; por ello no se incluyen ni el fuente ni el ensamblador, que
+no forman parte del DAAD.
+

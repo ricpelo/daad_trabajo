@@ -1,0 +1,994 @@
+; TEMPLOS 1 - Texto 16 bits  T1B.TXT
+;
+;  29-1-90
+; ========
+;________________________________________________________________________
+;                              System Messages
+#include TS1.TXT
+;
+; - Personajes
+;
+/PM+6
+Cipactli
+/PM+7
+Kuill
+;
+; - Examinas de Personajes
+;
+#define PE PM+6+NumPSIs
+/PE+0
+Es un indio bastante fornido. Al cinto lleva un afilado machete.
+
+/PE+1
+De la familia de los Lorus Tropicalis Escandalosus. Se encuentra bastante
+mareado.
+
+;
+; ----- Object descriptions for examine. No llevan punto al final.
+;
+#define OD PE+NumPSIs ;examina objetos
+/OD+Cajon
+#IF BIGMEM
+ Est  debajo del banco y bastante deteriorado
+#ENDIF
+/OD+Bambu
+#IF BIGMEM
+ Es un le¤oso tallo de gram¡nea. Tiene un conducto central
+#ENDIF
+/OD+Remo
+Es de fuerte madera, tiene una ancha pala
+/OD+PielX
+/OD+Cuerda
+#IF BIGMEM
+ Est  hecha de c ¤amo trenzado
+#ENDIF
+/OD+Papaya
+Es una cucurbit cea tropical de tama¤o parecido a un mel¢n. Est  bastante
+pocha
+/OD+Gusano
+Es un bicho peludo, regordete, ondulante y asqueroso
+/OD+Contrato
+Se trata de un papel bastante arrugado que pone: El portador de la
+presente es el due¤o de la barca llamada Yucatana
+/OD+Red 
+Bastante vieja. Hecha de finos hilos trenzados. Est  semipodrida y rota por
+varios sitios
+/OD+Cuenta1 ; creo que para todas las cuetas basta una s¢la descripci¢n
+; puesto que en el texto para objetos ya est n diferenciadas.
+#IF BIGMEM 
+ ; &&jm Poner para SAMLLTEXT
+ Es una pulida y brillante esfera del tama¤o de una naranja. Est  hecha de un
+ material muy extra¤o
+#ENDIF
+#define TiraS OD+Cuenta2
+/TiraS  ;si le dices que tire el contrato, le sigue "­Ni hablar!"
+¨Tirar _?\s
+#define DeLaS OD+Cuenta3
+/DeLaS ;para 'alrededor de la' y 'con la ayuda de la'
+e _
+#define ClavaS OD+Cuenta4
+/ClavaS ;al clavar la pua en la fruta dice "Vale" y ‚sto
+La p£a queda impregnada del jugo de la fruta.
+
+#define GusanS OD+Cuenta5
+/GusanS ;clavas la pua en el gusano, carg ndotelo
+Inmolas salvajemente al pobre gusano.
+
+#define SeNiegaS OD+Cuenta6
+/SeNiegaS ;si le pides al indio algo que no sea el machete
+Ni hablar, patroncito. Cada uno con lo suyo
+#define ExMarS OD+Cuenta7 
+/ExMarS ;lac¢nico mensaje para palizas que intenten examinar el mar
+Lo observas detenidamente por un rato. Cavilas una media hora y al fin
+te das cuenta, alucinado, de que se trata de una
+extensa superficie de agua salada.
+
+#define ICogeS OD+Cuenta8
+/ICogeS ; le dices al indio que coja la cuerda y dice 'El indio te mira con
+; cinismo y te dice "lo que usted diga, patroncito".' lo monto con mensajes de
+; aqu¡ y de all 
+\ste mira bastante extra¤ado y
+/ICogeS+1
+Lo que usted diga, patroncito
+#define MaliciaS OD+MCuenta1 
+/OD+MCuenta1 ;si te comes la papaya o el gusano delante del indio ‚ste sabe
+; que te vas a poner malo y por eso sonrie el joputa. lo pongo en un solo
+; mensaje porque sale solo en bigmem y es menos l¡o
+#IF BIGMEM
+ "­Qu‚ loco est  usted, patroncito" dice el indio con maliciosa sonrisa.
+
+#ENDIF
+/OD+Ristra ;le sigue una 'n' (si procede) y un listado de las cuentas que tiene
+De la cuenta del Imix cuelga
+/OD+Collar ;collar completo
+Est  formado por diez cuentas unidas electrom gicamente
+/OD+Hachuela
+Un pedazo de obsidiana con un borde cortante y otro romo
+/OD+Hacha
+Tiene un mango de madera con una cabeza de obsidiana atada con lianas
+/OD+Fruta ;decir que es como una cereza pero con hueso peque¤o
+Es una pulposa Curarem Bot£lica del tama¤o de una uva
+/OD+Espina ;para que no se la imaginen como se la imaginaba Paco
+Larga, fina y punzante
+/OD+FruEsp ;al teclear EX FRUTA hay que decir si est  atravesada o no
+La Curarem Bot£lica est  atravesada por la p£a del cactus
+/OD+Palo ; la ranura es una peque¤a concesi¢n al jugador para que no acabe
+;          tirando la aventura por la ventana y disfrutando con ello.
+Es un corto un palo a cuyo extremo hay una ranura
+/OD+Liana  ; la dejaremos por decir que son flexibles.
+Es un bejuco verde y flexible
+/OD+Estaca ; no
+#IF BIGMEM
+ Es un largo palo con una punta muy aguzada
+#ENDIF
+/OD+Cascabel
+#IF BIGMEM
+ Sigue haciendo til¡n
+#ENDIF
+/OD+JaguarK ;cuesta mas memoria quitarlo, as¡ que lo dejamos
+Es el cad ver de un jaguar, gran felino suramericano
+#IF BIGMEM
+ /OD+JaguarD ; si ponemos s¢lo "sanguinolento amasijo", nos vale para el mono
+ ;tal como est  hecho el programa tengo que tene un mensaje para cada objeto
+ ;De todas formas esto solo va para ordenadores con memoria grande
+ Un espect culo francamente desagradable. Un amasijo de tendones y m£sculos
+ empapados en sangre y que ya empieza a atraer algunas moscas verdosas
+#ENDIF
+/OD+MonoK ;cuesta mas memoria quitarlo, as¡ que lo dejamos
+Es el cad ver de un mono de buen tama¤o
+#IF BIGMEM
+ /OD+MonoD ;
+ Un espect culo francamente desagradable. Un amasijo de tendones y m£sculos
+ empapados en sangre y que ya empieza a atraer algunas moscas verdosas
+ /OD+PielJ ; dejar las dos para que sepa cual lleva? o s¢lo poner un mensaje
+ ; que valga para las dos y ya se lo dice el objeto.
+ ;Esto solo va en ordenadores con memoria grande as¡ que podemos tener los 2
+ Es una bella piel moteada
+ /OD+PielM
+ Es una monada de piel
+#ENDIF
+/OD+Tronco1 ; con un solo tronco basta.
+#IF BIGMEM
+ Presenta una superficie  spera y desigual
+#ENDIF
+/OD+Tronco2 ; no
+#IF BIGMEM
+ Toda la superficie es lisa y muy suave
+#ENDIF
+/OD+Tronco3 ; no
+#IF BIGMEM
+ Es un tronco muy recto
+#ENDIF
+/OD+Tronco4 ; no
+#IF BIGMEM
+ Tiene un di metro considerable
+#ENDIF
+/OD+Runa1 ;Van precedidos de 'Tiene grabado un s¡mbolo que representa a'
+;pon lo que significa en castellano, precedido de 'l ' si es masculino o de
+;' la ' si es femenino (ojo con los espacios')
+l Viento
+/OD+Runa2
+ una Casa
+/OD+Runa3 
+ un Lagarto
+/OD+Runa4 
+ una Serpiente
+/OD+Runa5 
+ una Calavera
+/OD+Runa6 
+ un Ciervo
+/OD+Runa7 
+ un Conejo
+/OD+Runa8 
+l Agua
+/OD+Balsa ;le sigue el n£m de troncos (2-4) con que est  hecha (BalsaM+6 y ss.)
+Es una recia balsa hecha con\s
+;/OD+Jarron
+;Pesados recipientes. Est n rotos e inservibles
+#define ComoS OD+LASTOBJ+1
+/ComoS
+¨C¢mo?
+
+;________________________________________________________________________
+/MTX                    ;Message Texts
+;
+;-Examinar cosas que no son objetos. Acaban en punto.
+;
+#define EE 0
+/EE+0
+Es un recio tabl¢n de madera. Debajo hay un caj¢n.
+/EE+1 ;esto no es un examina. Sale si intentas coger la cuenta con la red
+;en ordenadores con memoria grande (hay que usar una de las pieles)
+#IF BIGMEM
+ La cuenta se escapa entre los agujeros de la red.
+#ENDIF
+/EE+2
+Est  encharcado con agua de mar turbia, verdosa y llena de toda clase
+de asquerosos residuos.
+/EE+3 ; examinar losa
+La losa se mueve. Parece estar algo suelta.
+/EE+4 ;para acantilados y cenote
+Hay una buena ca¡da hasta la superficie del agua.
+/EE+5 ;pasadizos para 8 bits
+#IF DRAW
+ ;no va a salir (ver t1s)
+ Atraviesan los muros a dos alturas. Los que est n m s arriba quedan fuera de
+ tu alcance.
+#ENDIF
+/EE+6 ;ex bloque o bloques en pared o suelo
+Estos bloques sobresalen un poco, pero encajando perfectamente con la
+estructura.
+/EE+7
+Es un enorme y afilado cuchillo muy usado en estas tierras.
+/EE+8
+Es la extra¤¡sima espiral cuadrada que representa a las
+Estancias.
+/EE+9
+Es un bloque de piedra muy antiguo.
+/EE+10
+Son gram¡neas con un fino tallo le¤oso.
+/EE+11
+Es un gran ejemplar de Curaris Bot£licum. Est  cargado de peque¤os frutos.
+/EE+12 ;hay otro mensaje para la fruta que tienes en la mano
+Desde aqu¡ abajo parecen unas extra¤as cerezas.
+/EE+13
+El h£medo suelo est  lleno de humus, hojas podridas y malezas.
+/EE+14 ;en el claro
+El suelo est  demasiado ordenado y reciente en esta zona.
+/EE+15 ;idem al cavar
+Ves un peligroso foso.
+/EE+16 ;en el laberinto (menos en L10 - ver EE+25)
+Est  formado por grandes losas niveladas.
+/EE+17
+Planta perenne, de dura corteza y tallo prism tico lleno de espinas.
+/EE+18
+Es bastante profundo, de resbaladizas paredes y lleno de afiladas estacas.
+/EE+19
+Son unos palos largos y muy afilados.
+/EE+20 ;la barca, aparece el asiento y el fondo
+Aunque bastante vieja y con el fondo encharcado, la Yucatana parece muy
+marinera.\sSu £nica comodidad es un precario asiento a popa.
+/EE+21 ;mono vivo
+La banda de los monos est  dirigida por uno bastante
+m s grande e hist‚rico. Observas que tiene un cascabel
+al cuello.\k\b­Reconoces a Maccaccus Cognazus! Tu viejo
+y pisanguero incordiador en casa de Big Turk.
+/EE+22 ;en los escombros puedes encontrar la hachuela (eso est  en otro mensaje)
+Son un mont¢n de grandes piedras sueltas.
+/EE+23 ;examinas la vegetaci¢n en el laberinto (donde puedes encontrar un sello)
+La vegetaci¢n tropical es muy densa y forma un impenetrable muro.
+/EE+24 ;lianas cuando no las tienes
+Son bejucos de gran flexibilidad y resistencia que cuelgan de las
+altas ramas de los  rboles.
+/EE+25 ;ex suelo en L10
+Est  formado por grandes losas entre las que sobresale un bloque.
+/EE+26 ;vasijas en altar
+Pesados recipientes. Est n rotas e inservibles.
+/EE+27 ;idolo en sala derruida (SOLO !DRAW)
+Es un viejo ¡dolo de la cultura Maya.
+#define FstTunelEE 28
+#IF !DRAW
+ /EE+FstTunelEE+0 ;Pasadizos 16 bits. Plazoleta
+ Alto el del muro Norte y  ngulo Noroeste, bajo el del Oeste.
+ /EE+FstTunelEE+1 ;L1
+ Bajo en el muro Este y el Oeste, alto el del Norte.
+ /EE+FstTunelEE+2 ;L2
+ Alto el del  ngulo Noreste, bajos los de los muros Norte y Este.
+ /EE+FstTunelEE+3 ;L3
+ Bajos al Norte y al Sur, alto al Este.
+ /EE+FstTunelEE+4 ;L4
+ Altos en los  ngulos Noreste y Sureste, bajos al Norte y Sur.
+ /EE+FstTunelEE+5 ;L5
+ Bajo tanto el del Sur como el del Este.
+ /EE+FstTunelEE+6 ;L6
+ Alto en el  ngulo Sureste, bajo en el Suroeste y en los muros Este y Oeste.
+ /EE+FstTunelEE+7 ;L7
+ Bajo tanto el del Oeste como el del Sur.
+ /EE+FstTunelEE+8 ;L8
+ Bajo en el  ngulo Noroeste, el muro Norte y el Sur y alto en el
+  ngulo Suroeste.
+ /EE+FstTunelEE+9 ;L9
+ Bajos en los tres muros.
+ /EE+FstTunelEE+10 ;L10
+ Est n todos a bajo nivel.
+ /EE+FstTunelEE+11 ;Cenote
+ Est n todos a bajo nivel.
+ #define BarcaSD EE+FstTunelEE+12
+#ELSE
+ #define BarcaSD EE+FstTunelEE+1
+#ENDIF
+;-----------------------------A partir de aqu¡ van las descripciones cortas-
+;
+/BarcaSD
+MAR
+#define PlayaSD BarcaSD+1
+/PlayaSD
+PLAYA
+#define TemploSD PlayaSD+1
+/TemploSD
+FRENTE AL TEMPLO
+#define SalaSD TemploSD+1
+/SalaSD
+SALA DERRUIDA
+#define AltarSD SalaSD+1
+/AltarSD
+ALTAR
+#define SelvaSD AltarSD+1
+/SelvaSD
+SELVA
+#define PlazaSD SelvaSD+1
+/PlazaSD
+PLAZOLETA
+#define LaberintoSD PlazaSD+1
+/LaberintoSD
+ESTANCIA
+#define CenoteSD LaberintoSD+1
+/CenoteSD
+CENOTE
+#define AhogoISD CenoteSD+1
+/AhogoISD
+MAR
+#define AhogoMSD AhogoISD+1
+/AhogoMSD
+ARRECIFES
+;--------------------------------Mensajes varios
+#IF BIGMEM
+ #define FindM AhogoMSD+1 ;Encuentras algo al examinar una cosa
+ /FindM
+ Encuentras una\s
+ /FindM+1 ;las cosas que encuentras
+ papaya.
+ /FindM+2
+ hachuela.
+ /FindM+3
+ fruta caida del  rbol.
+ #define FindOM FindM+4   ;este para las tabletas
+#ELSE
+ #define FindOM AhogoMSD+1 ;Encuentras algo al examinar una cosa
+#ENDIF
+/FindOM
+Encuentras _.
+#define GusanoM FindOM+1
+/GusanoM ;ves el gusano en la papaya
+Un gusano se pasea por la papaya.
+#define EstacaM GusanoM+1
+/EstacaM ; ves una estaca suelta
+Una de las estacas est  algo suelta.
+#define FosoM EstacaM+1
+/FosoM ;tambien puede valer en el laberinto
+­El suelo cede bajo tus pies!\k
+/FosoM+1 ;al subir o bajar con manos llenas en foso o lianas en estancias
+­Resbalas torpemente y caes!
+/FosoM+2 ;encuentras el foso excavando
+Cavas en la blanda tierra y descubres un foso.
+#define EmpaladoM FosoM+3
+/EmpaladoM
+­Has quedado ensartado en las afiladas estacas!
+#define LanzaM EmpaladoM+1
+/LanzaM ;tiras cosas fuera del foso o al cenote
+­All  va _!\s
+/LanzaM+1
+Cae fuera del foso.
+/LanzaM+2 ;tiras cosas por la borda
+Tiras _ por la borda.
+/LanzaM+3 ;si tiras el remo atado pero no tienes cogida la cuerda este msg 
+;          sigue al anterior
+\s­@ se va con ‚l!
+/LanzaM+4 ;tiras cuerda sin remo al indio. Si la tiras con remo sale BarcaM+4
+Agarrando la cuerda por un extremo lanzas el otro al indio, pero no alcanza.
+#IF BIGMEM
+ /LanzaM+5 ;si pones SALVAR INDIO CON REMO
+ Es in£til. Cipactli est  demasiado lejos para alcanzar el remo.
+ #define JaguarM LanzaM+6
+#ELSE
+ #define JaguarM LanzaM+5
+#ENDIF
+/JaguarM
+Unos escalofriantes rugidos y el intenso olor a fiera te
+indican que hay un felino cerca.
+/JaguarM+1
+­Un enorme jaguar yucatano salta hacia ti!
+/JaguarM+2  ;un turno m s tarde...
+La fiera te impacta de lleno y caes al suelo.\k\bTu £ltimo
+recuerdo es el lacerante dolor de varios mortales mordiscos.
+/JaguarM+3
+Sujetando la estaca firmemente, la hundes en las entra¤as de la fiera.\k\bLa 
+humeante sangre brota a borbotones mientras el jaguar se retuerce en
+estertores ag¢nicos.\k\bPor
+fin, con un postrer rugido, se queda quieto. Est  muerto.
+/JaguarM+4 ;si disparas la cerbatana le irritas y te come. Le sige msg JaguarM+1
+S¢lo consigues cabrear m s al jaguar.
+/JaguarM+5 ;si intentas darle con el hacha no te da tiempo. Le sigue JaguarM+1
+Con gran valor alzas _ para defenderte del jaguar,
+pero con tan pobre arma solo consigues darle un enfurecedor
+golpecito en los morros.
+#define HachaM JaguarM+6
+/HachaM ;vale para el hacha o la hachuela y le pueden seguir varios mensajes
+Con la ayuda d
+/HachaM+1       ;cortas algo
+cortas _.
+/HachaM+2       ;despellejas a un bicho (p.ej.'consigues la piel del mono')
+consigues _.
+/HachaM+3       ;te construyes el hacha
+Con incre¡ble habilidad insertas la hachuela en la ranura del palo
+y la atas con la liana. ­Te has construido un hacha!
+/HachaM+4 ;cortar troncos con hachuela cortar algo que no sea madera de balsa
+@ no basta para cortar este tipo de troncos.
+/HachaM+5 ;El hacha ha perdido filo
+El hacha ha perdido filo y queda in£til.
+#define MonoM HachaM+6
+/MonoM
+Una variopinta banda de monos, en diversos estados de demencia,
+han tomado posesi¢n de esta parte de la selva.
+/MonoM+1
+Al verte, los hist‚ricos monos te acribillan a cocotazos.
+Para evitar mayores descalabros emprendes una vergonzosa huida.
+/MonoM+2 ;matas al mono, al que puedes haber examinado o no.
+Aciertas\s
+/MonoM+3 ;si no lo has examinado
+al panzudo jefe de los monos\s
+/MonoM+4 ;si lo has examinado
+a Maccacus\s
+/MonoM+5 ;
+quien, con un impresionante aullido, cae de cabeza y se desnuca.
+Sus ac¢litos contemplan at¢nitos el monicidio y luego huyen despavoridos.
+#define ComerM MonoM+6
+/ComerM  ;comerse a un bicho crudo
+La carne cruda puede ser un plato exquisito pero todo tiene un l¡mite.
+#define BambuM ComerM+1
+/BambuM ;intentas arrancar una ca¤a
+Las ca¤as est n firmemente sujetas al suelo.
+/BambuM+1 ;la cortas con el hacha o la hachuela (sigue a HachaM)
+consiges cortar un trozo de ca¤a.
+/BambuM+2 ;al meter algo en la ca¤a se sale por el otro lado
+@ se sale de la ca¤a por falta de sujeci¢n y cae al suelo.
+/BambuM+3 ;miras dentro de la ca¤a. Tambien sigue al msg de examinar ca¤a
+Est  hueca.\s
+/BambuM+4 ; soplas por la ca¤a vac¡a (o con el contrato de la Yucatana)
+­FFFFT! Soplas a trav‚s de la ca¤a.
+/BambuM+5 ; disparas con la cerbatana
+@ sale disparada.
+#define CajonM BambuM+6
+/CajonM ; intentas cogerlo
+#IF BIGMEM
+ @ est  fijo.
+#ENDIF
+#if VOCCHK
+ #define kkM CajonM+1
+ /kkM
+   (a.p.)
+ /kkM+1
+   (d.p.)
+ /kkM+2
+   (d.v.)
+ #define BalsaM kkM+3
+#else
+ #define BalsaM CajonM+1
+#endif
+/BalsaM   ;lo intenta con m s troncos y lo consigue
+Atando los troncos con la liana te haces una balsa.
+/BalsaM+1 ;no puedes coger la balsa pero puedes empujarla
+Empujas la balsa.
+/BalsaM+2 ;intentas deshacer la balsa sin hacha
+Las lianas se han secado y endurecido. ­No puedes desatarlas!
+/BalsaM+3 ;desfaces la balsa
+Cortas las lianas deshaciendo la balsa.
+/BalsaM+4 ;sigue al mensaje de examinar balsa y al num. de troncos
+\stroncos.\s
+/BalsaM+5 ;intentas subirte y ya estabas subido
+­Ya est s subido, tont¢n!
+/BalsaM+6 ;te caes de la balsa si tiene dos troncos
+@ es demasiado inestable y acabas de vuelta en el agua.
+/BalsaM+7 ;al describir si est s subido a la balsa
+Est s subido en la balsa.
+/BalsaM+8  ;al describir si est s nadando
+Est s nadando.\s
+#define NumM BalsaM+9
+/NumM    ;para bloques
+un
+/NumM+1  ;para troncos al examinar balsa
+dos
+/NumM+2
+tres
+/NumM+3
+cuatro
+#define CuentaM NumM+4
+/CuentaM  ;intentas coger la cuenta del altar sin red
+Intentas cogerla, pero la extra¤a cuenta levita fuera de tu alcance.
+/CuentaM+1 la coges con la red
+ atrapas la cuenta.
+/CuentaM+2 ;dejas la cuenta volante y sale volando
+Al soltarla, _ se eleva, gravita por encima de tu cabezota por un momento
+y...\k\b­Sale volando a toda velocidad!
+/CuentaM+3 ;si la dejas en el altar este mensaje sigue al anterior
+@ ocupa su lugar habitual sobre el altar.
+/CuentaM+4 ;tras la descripion de la loc. del altar si la cuenta est  flotando
+Por cierto, _ est ... ­FLOTANDO sobre el altar!
+/CuentaM+5 ;idem para la otra cuenta volante   
+@... ­levita a unos cinco metros sobre el suelo!
+/CuentaM+6 ;intentas coger la segunda cuenta volante
+Est  demasiado alta.
+/CuentaM+7 ;pero si ya has cogido todas las dem s cuentas
+@ levita ahora a un metro del suelo.
+/CuentaM+8 ;si dejas la ristra la cuenta vuelve a subir
+@ se eleva de nuevo en el aire.
+#define RistraM CuentaM+9
+/RistraM ;una cuenta se une a otra
+@ se une m gicamente a
+/RistraM+1 ;al dejar la magnetocuenta varias cuentas caen al suelo
+Las dem s cuentas caen
+/RistraM+2 ;si solo habia una cuenta pegada a la magnetoidem
+La otra cae
+/RistraM+3 ;fin del mesaje
+\sal suelo.
+#define CollarM RistraM+4
+/CollarM ;al coger la segunda cuenta formas el collar
+@ se une a las dem s formando un collar.
+/CollarM+1 ;te lo pones dando lugar a la gran cascada
+En cuanto te lo pones, el collar se eleva llev ndote colgado
+del cuello. Boqueas un poco, sacas obscenamente la lengua y
+tus ojos se desorbitan. Es decir... ­Te ahorcas!
+#define AtaM CollarM+2
+/AtaM ;no puedes atar la liana porque tiene atados los dos cabos
+­Sus dos cabos ya est n atados!
+/AtaM+1 ;la atas
+Atas _ con
+/AtaM+2 ;la desatas (tambien vale para la cuerda)
+Desatas _.
+/AtaM+3 ;obvio
+­La liana no est  atada a eso!
+/AtaM+4 ;sigue al examina de un obj atado
+Tiene una liana atada.
+/AtaM+5 ;sigue al examina de la liana si est  atada (le sigue sysmess 110)
+Est  atada
+/AtaM+6  ;hay que soltar la liana est  atada y no da m s de s¡
+La liana no da m s de s¡. Tendr s que dejarla si quieres continuar.
+/AtaM+7  ;tiras del objeto al cambiar de localidad
+Arrastras _.
+/AtaM+8  ;un objeto se queda atascado (pasa en el laberinto)
+@ se atasca.
+/AtaM+9  ;no dejando atar la papaya en la barca me ahorro muchos l¡os
+La papaya est  demasiado blanda, podrida, gelatinosa y
+babosa para atarla.
+/AtaM+10 ;sigue al examina del remo o la cuerda si est n atados
+La cuerda est  atada al remo.
+#IF BIGMEM
+ /AtaM+11 ;si la liana cuelga de un agujero alto sale en la descripci¢n
+ La liana cuelga del t£nel alto del\s
+ #define CenotM AtaM+12
+#ELSE
+ #define CenotM AtaM+11
+#ENDIF
+/CenotM ;tiras algo al cenote (puede continuar en el siguiente mensaje)
+;tambien si dejas algo cuando estas nadando en el cenote o el mar
+@ desaparece en las turbias aguas del cenote
+/CenotM+1 ;si est  atado arrastra la liana [y lo otro que tuviera atado]
+ arrastrando _
+/CenotM+2 ;pero hemos atascado el tronco
+La liana sujeta _, que queda flotando sobre el agua.
+/CenotM+3 ;bajas por la liana pero no est  bien atada
+­Te vas abajo con liana y todo!
+/CenotM+4 ;y le sigue este mensaje que tb sale si saltas o bajas sin nada
+Recibes un fuerte golpe contra el agua del cenote.
+/CenotM+5 ;bajas/subes por la liana
+Lo haces con gran derroche de habilidad.
+#define FinaleM CenotM+6
+/FinaleM ;mensaje final con clave y todo. Sale tras montarte en la balsa y
+;         desatarla o cortar la liana (sugiero 'liberas la balsa...')
+;         Puedes usar varios \k\b
+Por un momento gira dentro del cenote,
+pero pronto es arrastrada por una fuerte corriente hacia una de las
+paredes.\k\bVas directo hacia la boca de un bajo t£nel y te
+agachas justo a tiempo.\k\bTe encuentras navegando bajo tierras yucatanas por
+un antiguo canal.\k\bEn la densa y h£meda oscuridad te preguntas
+qu‚ nuevas aventuras te esperan.\k\b­TUR KOS BON!
+
+#define RunaM FinaleM+1 
+/RunaM ; cuando examinas una "runa"
+Tiene grabado un s¡mbolo que representa a
+/RunaM+1 ;dejas una runa en su localidad
+@ captando la exacta dosis de energ¡a ambiental, se transforma en una
+cuenta de jade.
+/RunaM+2 ;si la dejas en otro sitio
+@ emite un bajo zumbido y empieza a desvanecerse, pero
+pronto el ruido cesa y recobra su solidez normal.
+/RunaM+3 ;rebuscando en la vegetacion encuentras uno de las sellos
+Rebuscando entre la maleza encuentras _.
+#define PlazaM RunaM+4
+/PlazaM ;la primera vez en la plaza
+La tenue iluminaci¢n, el s£bito apagarse de los selv ticos murmullos y la
+limpieza del aire, indican que has llegado a un lugar
+especial.\k\bEfectivamente, es el inicio de las M gicas Estancias Interconexas,
+uno de los m s misteriosos lugares del Yucat n, donde una distorsi¢n
+espacio-temporal permite la ocurrencia de cualquier cosa.\k\bDesde lo alto, a
+vista de loro, se observa que...
+/PlazaM+1 ;al desc plaza si has abierto el cenote
+.\sAhora, en la pared norte, los bloques salientes forman unos
+pelda¤os que llegan hasta el agujero superior
+#IF BIGMEM
+ /PlazaM+2 ;sale tras el examina de la pared norte si hay escalera
+ Adem s, hay unos bloques salientes que llegan hasta el agujero alto.
+ #define LosaM PlazaM+3
+#ELSE
+ #define LosaM PlazaM+2
+#ENDIF
+/LosaM    ;pasa con un chance hasta que la levantas
+De pura chiripa pisas una losa que est  suelta.
+/LosaM+1  ;pero antes de haberla pisado no sabes que est  ah¡
+¨Qu‚ losa?
+#define BloqM LosaM+2
+/BloqM   ;examinas pared donde no hay
+Ah¡ no hay ninguna pared.
+/BloqM+1 ;s¡ la hay 'De la pared tal sobresalen tantos bloques'
+De la pared\s
+/BloqM+2 ;si hay m s de un bloquele sigue una 'n '
+\ssobresale
+/BloqM+3 ;si hay m s de un bloque le sigue una 's '
+\sbloque
+/BloqM+4
+de piedra.
+/BloqM+5 ;pulsas un bloque, da igual que abras o cierres
+Oyes mecanismos moverse en el interior de las paredes.
+/BloqM+6
+En esa pared no hay ning£n bloque.
+/BloqM+7 ;si mueves el bloque en L10 mueres entrampado
+­No es la presi¢n correcta!
+/BloqM+8 ; si quitas el collar de encima del bloque
+Lentamente, con un siniestro sonido, el bloque vuelve a sobresalir del suelo.
+/BloqM+9 ;sigue a cualquiera de dos los anteriores
+\k\bHas desestabilizado todo el complejo arquitect¢nico.\k\b­Los grandes muros
+se derrumban aplast ndote!
+/BloqM+10 ;dejas el collar sobre el bloque que est  en el suelo
+El peso del collar hace descender el bloque, nivel ndolo
+ex ctamente con los dem s. Oyes, muy cerca a ti,
+el roce de una piedra al deslizarse sobre otra y un ruido m s lejano
+que no alcanzas a identificar.
+#define TunelM BloqM+11
+/TunelM   ;intentas ir por un tunel cerrado
+­Toc! Tu occipucio golpea secamente contra un bloque de piedra.
+/TunelM+1 ;al hacer SALIDAS en las estancias
+;no lleva punto para poder a¤adir 'y al Sur' en la plazoleta
+Puedes intentar ir por los t£neles de las paredes
+/TunelM+2 ;si est s en el cenote le sigue ‚ste (ojo, sin puto)
+\so bajar al cenote
+/TunelM+3 ;si te metes por los putot£neles del cenote 
+Entras en un oscuro e inclinado t£nel descendente.\k\b­Resbalas y caes
+desliz ndote!\k\bSales disparado por un agujero en la pared del acantilado.
+#define IndioM TunelM+4
+/IndioM   ;intentas bajar de la barca on contrato y/o cuerda
+"As¡ no me deje, patroncito, no llevo lo necesario para navegar
+por estas aguas" exclama el indio con mala cara.
+/IndioM+1 ;si no los llevas
+El indio te deja desembarcar y se aleja con la barca. Al notarse
+en tierras extra¤as, Kuill emprende un vuelo exploratorio.\k\b
+/IndioM+2 ;sale en la desc o al examinar al indio
+Cipactli est  en grandes apuros con el agua al cuello.\s
+/IndioM+3 ;si te pones malo el indio te quita el contrato
+Cipactli, al notar tu debilidad, se apodera del contrato.\s
+/IndioM+4 ;si le atacas, te puede
+Te lanzas sobre Cipactli sin pensar que ‚l tiene un machete.
+El indio, cogido por sorpresa, retrocede, pero empu¤a el arma y,
+con un grito de rabia, acaba contigo.\s
+/IndioM+5 ;si le das el contrato antes de tiempo :Cipactli te dice "Gracias.
+.\sAhora soy el due¤o de la Yucatana
+;y acaba cerrando comillas; punto y aparte y el siguiente
+/IndioM+6 ;si dejas el contrato el indio lo coge. luego te da las gracias 
+;y si no estais en la playa te tira (le sigue ' te dice "Gracias"...')
+El cozumelano coge el contrato y
+/IndioM+7 ;si el indio consigue el contrato te tira la agua
+A punta de machete, el cozumelano te obliga a finalizar el crucero tropical
+/IndioM+8 ;si llevabas algo m s sigue este
+\sno sin antes quitarte todo lo que llevas
+;luego pongo un punto, espero una tecla y borro
+/IndioM+9 ;si le pides el remo al indio te dice ‚sto (o algo semejante)
+Patroncito, cada uno a lo suyo. Yo remo mejor
+/IndioM+10 ;si le pides el machete
+Mi arma es s¢lo m¡a
+/IndioM+11 ;cuando el indio lleva un poco en el agua
+El hombre al agua empieza a ser el centro de atracci¢n
+de un grupo de voraces tiburones.
+/IndioM+12 ;si sigues tardando
+Los tiburones atacan y devoran al indio, quien, entre espantosos aullidos de
+agon¡a, ve el mar te¤irse de rojo con su sangre.\k\bTras la terrible escena,
+quedas a la deriva, y pese a tus valerosos intentos, te pierdes en el mar
+caribe¤o.
+#IF BIGMEM
+ /IndioM+13 ;si le preguntas al indio "qu‚ quieres"
+ S¢lo quiero lo que acordamos, patroncito. La barca y sus pertrechos no m s
+ #define BarcaM IndioM+14
+#ELSE
+ #define BarcaM IndioM+13
+#ENDIF
+/BarcaM al haces 'salidas' en la barca
+Solo mar te rodea.
+/BarcaM+1 ;tres mensajes para indicar que se acerca una tormenta
+;       este sale al describir la primera vez
+Negras nubes se van reuniendo en el horizonte. La temperatura
+comienza a descender. Cipactli se estremece de fr¡o y las plumas
+de Kuill se agitan con el viento.
+/BarcaM+2 ;este sale al cabo de unos turnos
+Est  muy nublado. Los brillantes rel mpagos y los
+ensordecedores truenos presagian una tormenta tropical. Cipactli
+parece muy preocupado y rema m s r pido. Kuill, muy nervioso, se acurruca
+contra uno de los lados de la barca.
+/BarcaM+3 ;y esta al cabo de m s turnos
+"Parece que el temporal se nos echa encima", dice el indio muy nervioso.
+/BarcaM+4 ;con ‚ste ya pasamos a la tormenta
+\k\bLa furia de la tormenta te alcanza con toda su fuerza.
+El mar ruge, se encrespa y se agiganta. Kuill se apelotona formando
+una palpitante masa de plumas. Cipactli combate el embravecido mar
+remando con furia, pero un golpe de mar desequilibra la barca
+y lo hace caer entre las agitadas olas.\k\b
+/BarcaM+5 ;tiras al indio el remo atado a la cuerda
+;una vez que sacas al indio vuelve a cambiar de loc. De momento va
+; directamente a la playa, puli‚ndome hambre y arrecifes
+; Luego aparece tierra, tu le has de decir al agotado
+; Cipactli que reme y llega¡s a la playa.
+Tiras al mar el remo atado con la cuerda. Tras varios intentos,
+Cipactli lo coge y, con tu ayuda, vuelve
+a la barca. En silencio y agotado, el indio recoge
+de nuevo sus cosas.\k\bPasa el tiempo...\k\bReanud is
+la traves¡a y por fin lleg is a la playa.\k\b
+/BarcaM+6 ;intentas remar (solo puedes hacerlo con el indio en el agua)
+Incapaz de gobernar t£ solo la encabritada barca,
+describes err ticos c¡rculos alrededor del pobre indio.
+#IF BIGMEM
+ /BarcaM+7 ;te tiras al agua con contrato desde barca
+ Lo intentas irreflexivamente, pero el fornido indio, te lo impide. ¨Qu‚
+ oscuro motivo tendr  para impedir el suicidio de un insensato?
+ /BarcaM+8 ;te tiras en la tormenta y la cascas
+ En un arrebato de ciega solidaridad te tiras al agua colaborando activamente
+ en el banquete para los tiburones. Hoy no se podr n quejar.
+#ENDIF
+;________________________________________________________________________
+/OTX
+;Objects
+;
+/Cajon
+#IF BIGMEM
+ un caj¢n
+#ENDIF
+/Bambu
+una ca¤a
+/Remo
+un remo
+/PielX ;usado para no especificar de qu‚ piel se trata
+una piel
+/Cuerda
+una cuerda
+/Papaya
+una papaya
+/Gusano
+un gusano
+/Contrato
+un papel
+/Red
+una red
+/Cuenta1
+una cuenta del Ik
+/Cuenta2
+una cuenta del Akbal
+/Cuenta3
+una cuenta del Kan
+/Cuenta4
+una cuenta del Chicchan
+/Cuenta5
+una cuenta del Cimi
+/Cuenta6
+una cuenta del Manik
+/Cuenta7
+una cuenta del Lamat
+/Cuenta8
+una cuenta del Muluc
+/MCuenta2
+una cuenta del Oc
+/MCuenta1
+una cuenta del Imix
+/Ristra
+una ristra de cuentas
+/Collar
+un collar
+/Hachuela
+una hachuela
+/Hacha
+un hacha
+/Fruta
+una fruta
+/Espina
+una p£a de cactus
+/FruEsp
+una fruta atravesada por una p£a de cactus
+/Palo
+un palo
+/Liana
+una liana
+/Estaca
+una estaca
+/Cascabel
+un cascabel
+/JaguarK
+un jaguar muerto
+#IF BIGMEM
+ /JaguarD
+ un jaguar despellejado
+#ENDIF
+/MonoK
+un mono muerto
+#IF BIGMEM
+ /MonoD
+ un mono despellejado
+ /PielJ
+ una piel de jaguar
+ /PielM
+ una piel de mono
+#ENDIF
+/Tronco1
+un tronco rugoso
+/Tronco2
+un tronco liso
+/Tronco3
+un tronco recto
+/Tronco4
+un tronco grueso
+/Runa1
+una tableta del Ik
+/Runa2
+una tableta del Akbal
+/Runa3
+una tableta del Kan
+/Runa4
+una tableta del Chicchan
+/Runa5
+una tableta del Cimi
+/Runa6
+una tableta del Manik
+/Runa7
+una tableta del Lamat
+/Runa8
+una tableta del Muluc
+/Balsa
+una balsa
+;/Jarron
+;un jarr¢n
+;________________________________________________________________________
+/LTX                    ;Location Texts
+/Cajon ;localidad para contenedor. Tambi‚n pantalla de cr‚dito.
+
+****************************************************
+
+
+
+              TEMPLOS SAGRADOS I Parte
+
+              ========================
+
+
+
+              Direcci¢n: Andr‚s Samudio
+
+
+
+
+          Programaci¢n: Juan Manuel Medina
+
+
+                Gr ficos: Paco Zarco
+
+
+                   Carlos Marqu‚s
+
+
+
+****************************************************
+
+
+/Bambu
+/2
+/3
+/INDIO
+/RISTRA
+/BALSA
+/LIMBO
+/MUERTE
+­Has muerto!
+
+/Barca ;este debe llevar .\s al final.
+Te encuentras a bordo de una barca entre la isla de Cozumel
+y las tierras del Yucat n.\s
+;
+; -Descripciones largas de las locs. que tambien tienen descs. cortas
+;
+/MarI
+Hace un tiempo inestable y las aguas est n algo picadas
+/MarT
+La barca se agita en medio de una gran tormenta
+/MarH
+;Hambre
+/Playa2 ;nueva localidad para aprovechar el gr fico de 16 bits
+#IF !DRAW
+ El mar lame perezosamente las blancas arenas de esta solitaria cala. La playa
+ se extiende hacia el sur, donde termina en una escarpada pared rocosa
+#ENDIF
+/Playa
+Sobre la alta muralla rocosa que bordea la playa se yergue
+orgulloso un peque¤o templo
+/Frente
+­Otra vez frente a un templo Maya! Recuerdas tus
+pasadas aventuras en Cozumel y por tu mente revolotean im genes
+de la dulce Zyanya y de la bella, pero temible, Ix Chell
+/Derruid
+Est s en una sala bastante espaciosa que tiene parte del techo derrumbado.
+La luz entra a raudales por el boquete, dej ndote ver
+un enorme ¡dolo y un bloque de piedra con un curioso dibujo
+/Altar ; al examinar los escombros encuentras la hachuela
+En esta habitaci¢n, usada para ritos religiosos, destacan varias
+enormes vasijas antropomorfas y un altar junto al cual
+hay un mont¢n de escombros
+/Selva1
+En esta zona la vegetaci¢n es muy abundante pero, al ser terreno
+pantanoso, est  entremezclada con ca¤as de bamb£ y juncos.
+Destaca un extra¤o y sombr¡o  rbol
+/Selva2
+En esta parte, en cambio, el agua es muy escasa, dando un terreno
+semides‚rtico, capaz de soportar s¢lo algunos chaparrales y cactus
+/Selva3
+Ahora llegas a una zona de bosque alto y muy variado, con grandes
+ rboles cargados de lianas y cocoteros de tierra adentro
+/Selva4
+Un amplio claro en la selva, rodeado por toda clase de vegetaci¢n tropical
+entremezclada con  rboles de madera de balsa
+/Foso
+Evidentemente, este foso, plet¢rico de estacas, es una trampa
+terrible y eficaz para los grandes felinos y alg£n que otro despistado
+antropoide
+/Selva5
+Te encuentras en la espesa selva yucatana, rodeado por altos y
+frondosos  rboles de todo tipo
+/Plaza
+Est s en una plazoleta que termina hacia el Este en un profundo acantilado
+que da al mar.
+Al Norte y el Oeste hay dos cicl¢peos muros en los que se abren
+unos grandes orificios. Estos muros est n construidos por bloques de piedra
+algunos de los cuales sobresalen de los dem s. La selva queda al Sur
+/L1
+Los muros te rodean por tres lados, excepto por el Sur, donde la selva
+es tan densa que forma una verdadera barrera natural
+/L2
+Hay muros al Norte y Este. Al Sur queda la selva y al Oeste termina la rocosa
+pared de un precipicio de monta¤a
+/L3
+La escarpada ladera de monta¤a cierra el lado Oeste. En los otros tres
+lados est n los muros
+/L4
+De los tres muros el £nico que no tiene agujeros es el del Este.
+La escarpada ladera de monta¤a cubre el lado Oeste
+/L5
+Al Norte reaparece de nuevo la espesa selva. Al Sur y Este, muros.
+La escarpada ladera de monta¤a cubre el Oeste
+/L6
+Muros en tres de los lados y al Norte la espesa selva que cierra el
+cuadrado
+/L7
+Muros en dos de los lados, la espesa selva al Norte y una
+magn¡fica panor mica mar¡tima al Este
+/L8
+S¢lo la magn¡fica panor mica marina rompe la monoton¡a de los muros
+/L9
+La ca¡da al mar, al Este, cierra el cuadrado iniciado por los tres muros
+/L10
+Cuatro silenciosos muros con agujeros te rodean
+/Cenote
+Es una estrecha cornisa alrededor de un profundo Cenote en cuyo fondo
+se mece el agua turbia. En los cuatro muros que rodean la cornisa
+hay agujeros
+/AhogoI ;pasan varios turnos y te mueres de agotamiento
+Luchas contra las olas mientras contemplas impotente al cozumelano largarse
+con barca, contrato y loro
+/AhogoM ;puedes llegar por los t£neles o saltando directamente
+Caes al mar desde gran altura y te destrozas contra los afilados arrecifes.
+/AhogoC ;dice lo de la liana porque solo pudes bajar colgado de ella
+; le sigue un msg diciendo que est s nadando o en la balsa seg£n proceda
+Las turbias aguas del Cenote est n rodeadas por
+lisas paredes que se alzan en vertical hacia la amplia boca.
+Desde lo alto cuelga una liana
+

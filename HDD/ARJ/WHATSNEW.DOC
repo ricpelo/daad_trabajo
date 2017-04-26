@@ -1,0 +1,172 @@
+
+     WHATSNEW.DOC					July 1991
+
+
+     This lists the user visible changes to ARJ from previous versions.
+
+
+     ARJ 2.20
+
+     UNARJ is now distributed separately.
+     The ARJSFX (-je) and ARJSFXJR (-je1) have improved extraction speed.
+	The "-je" module is slightly faster then "ARJ x".
+     Added an internal identification string "aRJsfX" to the SFX modules.
+     Removed the BIOS call in the SFX modules to be more MS-DOS generic.
+     Methods 3 and 4 have been significantly improved in speed and
+	compression.  Method 4 is about twice as fast as method 1.
+     Improved the speed of all of the extraction methods.
+     Simplified the extraction display when both filenames are the same.
+     Added check for disk space to "-va" option.
+     Added ARJ configuration file option to ARJ_SW to allow each ARJ
+	command to have its own switch settings.
+     Added beep to "-vv" option after last volume.
+     Added "-d" option support to the "ARJ j" command.
+     Added "-z" option support to ARJ archive modification commands in
+	order to allow archive creation and commenting in one command.
+     Added "-jl" option to limit filename displays to filespecs.
+     Added "-jp" option support to provide a paged display facility.
+     Added "-jw" option to direct extraction output to another file.
+     Added "-jx" option support to extract functions for specifying
+	starting output file position.
+     Added "-jy" options to allow single key Y/N input on user queries
+	and typeahead erase.
+     Added REARJ "/a*" option to convert any archive type in an archive.
+     Added REARJ "/b" option to execute a command before extraction.
+     Added REARJ "/c" option to execute a command after extraction but
+	before REARJ counts the files for later verification.
+     Added REARJ "/f" option to support diskette archive conversions.
+     Added REARJ "/w" option to set a working temp directory.
+     Separated the file counts from the comment counts.
+     Modified the context message prompt for the "w" command.
+     Modified the "f" and "u" commands to not physically update an archive
+	when no files have been added.
+     Modified the switch character handling to allow different switch
+	characters in ARJ_SW and the command line except when using "-ju".
+     Modified the "ARJ o" command to abort on multiple volume archives.
+     Modified "-$" to not return an error when there is no label to add.
+     Modified the "-ji" option to append to already existing files.
+     Fixed printf() statement in list_arc() in UNARJ.C.
+     Fixed bug with "ARJ m -t1" when file is not text.
+     Fixed bug scanning hidden directories with "-a" and "-a1" options.
+     Fixed bug with "ARJ a -n" command.
+     Fixed bug with "ARJ o"/ARJSORT handling of duplicates in archives.
+
+
+     ARJ 2.10
+
+     ** IMPORTANT NEWS ****************************************************
+
+	ARJ utility developers should refer to UNARJ.DOC in UNARJ.ARJ
+	concerning a bug in extended header processing in UNARJ.C and an
+	ambiguous source statement in DECODE.C.
+
+	The ARJ SFX (-je) and SFXJR (-je1) modules have been modified
+	because of an undesirable interaction with TSR DIET 1.02b.  You
+	should redo any ARJ SFX type archives with ARJ 2.20.  Here is a
+	fast way to do it without recompressing:
+
+	ARJ j newsfx oldsfx.exe -je
+
+     **********************************************************************
+
+     The version and copyright message has been changed to indicate that the
+	unregistered version is not for commercial use.  It can be used for
+	evaluation use for 30 days in a commercial environment.
+     Registered users can obtain the new ARJR and DEARJ programs.
+     ARJ.DOC has been updated and revised extensively.
+     Added directory type checking to command line processing.
+     Added caseless search and context display option to "w" command.
+     Added "-t1" checking for input file type.
+     Added "-$" volume label option.
+     Added "-i1" option to display bar graph progress indicators.
+     Added "-jf1" option to strip only the drive spec from a pathname.
+     Added "-jm1" option as a faster "-jm".
+     Added "-jo" option to query on updating when using "a" command.
+     Added "-jy" option to select types of user queries to skip.
+     Added "-s2" option to set date-time stamp only during modifications.
+     Added extra checks to rename functions to avoid Windows 3.0 bugs.
+     The UNARJ source package has been translated to Portable C and now
+	supports the "e", "l", "t", and "x" commands.  UNARJ.EXE is included.
+     Improved appearance of progress indicators with extra spaces.
+     Changed default ARJSFX command to "-x".
+     Modified ARJ freshen and update functions to work like PKZIP and LHARC.
+     Modified file date-time stamping to work in OS/2 DOS emulation.
+     Modified "ARJ -? > filename" to not pause per screenful.
+     Modified ARJ l *.* to not abort on non-ARJ archives.
+     Added error messages for ! usage.
+     Added new error messages to REARJ.EXE.
+     Removed "-jg" switch.
+     Modified pathname matching in freshen and update commands.
+     Modified pathname matching to account for use of "-e1" option.
+     Modified wildcard matching to handle "???" according to DOS conventions.
+     Modified handling of the 0 file(s) warning during wildcarded scans of
+	archives.
+     Fixed password handling so that archives can have passworded and
+	unpassworded files in the same archive.
+     Fixed extender header processing in ARJ and UNARJ.
+     Fixed ambiguous statement in DECODE.C in UNARJ.
+     Fixed "-jd" option with ARJ l command.
+     Fixed problem with ARJ self-extractors when DIET 1.02 is memory resident.
+     Fixed problem with ARJ exiting early when processing archives with "-v".
+     Fixed first line display problem with ARJ "s" command.
+     Fixed errorlevel code processing for Bad Huffman code.
+
+
+     ARJ 2.00
+
+     Speeded up compression methods 1 and 2 over 100 percent to close to
+	PKZIP speed.  Improved compression of methods 1 and 2.
+	Decreased memory usage of method 1 by almost 60,000 bytes.
+     Added full ANSI C source code for simple UNARJ extractor program.
+     Added extraction of archive header comments via "-z" option.
+     Added "-jm" option to set maximum compression mode.
+     Added "-jn" option to skip selected files up to named file.
+     Added "-ji" option to create a file containing the filenames archived.
+     Modified "x" command to require "-jf" for absolute extract.
+     Modified ARJ to handle merged ("j" command) multiple volume archives.
+     Modified options of REARJ to use "/o" to delete a target archive and
+	"/u" for updating an archive to the same format.
+     Fixed handling of ..\ type pathnames.
+     Fixed redundant delete error messages when using "m" with "-v".
+     Fixed REARJ.EXE for paths with drive letters.
+     Removed disk space checking in REARJ.EXE.
+     Fixed REARJ.CFG for LZH files.
+
+
+     ARJ 1.10
+
+     Provided archive conversion program, REARJ.
+     Speeded up extraction functions closer to LHA 2.10 speed.
+     Speeded up method 1 and 2 compression by 20 percent.
+     Added more frequent checking of CTL C.
+     Added new UPDATE.DOC to document new changes.
+     Added directory creation to ARJSFXJR module (-je1).
+     Added "i" command to verify ARJ program.
+     Added "j" command to join archives.
+     Added "-!" option to set list file character (!).
+     Added "-a1" option to add empty directories.
+     Added "-s1" option to keep original archive timestamp.
+     Added "-z" option to name the comment file on command line for header.
+     Added "-jz" option to name the comment file on command line for files.
+     Added errorlevel support.
+     Modified AV.C to handle directory entries.
+     Modified ARJ to recognize "..." filespec as a special case.
+     Modified "-x" to work for non-update commands and for subdirectories.
+     Modified "-v" usage during extraction to allow correcting the
+	insertion of the wrong diskette.
+     Improved temporary file usage with unique filenames.
+     Fixed improper "Can't reset archive bit" message.
+     Fixed "-p" handling in ARJSFX self-extract module.
+     Fixed "-p" handling with base dir and non-update commands.
+     Fixed display of years over 1999 in "l" and "v" commands.
+     Fixed "-o" and "-ob" options to interpret 80 as 1980.
+     Fixed handling of new lines in comments in ARJSFXJR.
+
+
+     ARJ 1.00
+
+     First production release.
+
+
+     end of WHATSNEW.DOC
+

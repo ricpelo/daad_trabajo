@@ -1,0 +1,211 @@
+
+     UPDATE.DOC, ARJ 2.20				      July 1991
+
+
+     This documents new or updated information since ARJ 2.10.
+
+
+     ** IMPORTANT NEWS ****************************************************
+
+	The UNARJ software is now distributed separately in an archive
+	named UNARJ220.EXE.
+
+	The "-ji" index file option now appends to instead of overwriting
+	an existing index file.
+
+	The second user prompt for the "w" command has been changed to
+	ask for the number of match context lines.
+
+	You may now register ARJ via credit card through Public Software
+	Library.  See CREDIT.CRD for more information.
+
+     **********************************************************************
+
+
+     ARJR and DEARJ programs
+
+	The new programs ARJR and DEARJ are available only to registered
+	users of ARJ.  ARJR is the ARJ program minus the help screen and
+	SFX modules.  DEARJ is the ARJR program minus the archive
+	creation/modification functions.  DEARJ is used for commercial
+	software distributions involving multiple volume archives.  See the
+	LICENSE.DOC and ORDERFRM.DOC for more information.
+
+
+     ARJ SFX MODULES
+
+	The ARJ self-extraction modules have been improved in terms of
+	speed.	The "-je" module is slightly faster than ARJ in extraction
+	speed. The one BIOS call that the SFX modules used has been removed
+	to provide better compatibility with partial IBM compatibles.
+
+	Both SFX modules have an identification string located in the first
+	1000 characters of the executable.  The identification string is
+	"aRJsfX" without the quotes.
+
+
+     ARJ COMMANDS
+
+     "e" or "x" commands
+
+	During the extraction display, ARJ will display only one filename
+	if the "from" and "to" filenames are identical.
+
+
+     "f" and "u" commands
+
+	ARJ will not physically update an archive when no files and no
+	comments have been added to the archive.  In other words, the
+	date-time stamp both internally and externally (DOS) will remain
+	unchanged.
+
+
+     "o" command
+
+	The ARJ "o" command will abort when attempted on a multiple volume
+	archive.
+
+
+     "p" command
+
+	The switch option "-jp" will force the "p" command into a paged
+	display mode like the DOS MORE command.
+
+
+     "w" command
+
+	The context message prompt has been changed.  Instead of asking if
+	the user wants to display the context of any matches, ARJ asks how
+	many lines of context to display.  An answer of "0" (zero) will
+	disable the display of string match context.
+
+
+     ARJ SWITCHES
+
+	The switch character handling has been modified to allow a
+	different switch character to be used in ARJ_SW and in the command
+	line except when the option "-ju" (unix) has been specified.  This
+	will prevent problems when using the ARJ_SW variable and archiver
+	shell programs that use a different switch character.
+
+	If the ARJ_SW environment variable specifies a filename (text not
+	beginning with a switch character), ARJ will open that filename and
+	scan it looking for a line of text that begins in column 1 with the
+	same letter as the ARJ command being executed.	The following text
+	is processed as the ARJ_SW switches.  This allows each ARJ command
+	to have its own switch settings.  If no such command text is found,
+	then no switch settings are processed as the ARJ_SW switches.
+
+	SET ARJ_SW=C:\ARJ\ARJ.CFG
+
+	C:\ARJ\ARJ.CFG contains:
+	a -jm1 -jt -i1
+	l -jp
+	e -i1
+	c -zcomment.txt
+
+
+     "-$" switch
+
+	Adding a non-existent volume label will NOT produce a warning or
+	error code.
+
+
+     "-a" switch
+
+	ARJ will correctly scan hidden directories with the "-a" and "-a1"
+	options.
+
+
+     "-d" switch
+
+	The "-d" switch option now works for the "j" command.
+
+
+     "-m" switch
+
+	Methods 3 and 4 are significantly faster and more compressive.
+	Method 4 compression is almost twice as fast as the default method
+	1 compression.
+
+
+     "-v" switch
+
+	The "-vv" option will beep after the last volume.  This may be used
+	on a single archive creation by using a command similar to this:
+
+	ARJ a -vv9999K archive *.*
+
+	When using the "-va" option, ARJ will prompt concerning disk space
+	when there is less than 10,000 bytes free.
+
+
+     "-z" switch
+
+	The "-z" comment switch works with other modification functions
+	besides the "c" command.  This allows you to add a comment at the
+	same time as you add files to an archive.
+
+	Example:  ARJ a -zcomment.txt archive *.doc
+
+
+     "-ji" switch
+
+	The "-ji" has been changed to append the filename logging
+	information to an already existing file.
+
+
+     "-jl" switch
+
+	The "-jl" switch forces ARJ to display only the filespec of
+	filenames for the different progress displays.
+
+
+     "-jw" switch
+
+	The "-jw" switch allows you to specify the output filename for
+	extracted data.  When using this switch, you should only select one
+	file for extraction.  This is similar but not exactly the same as
+	using the "p" command with DOS output redirection.  Using DOS
+	redirection would cause all of the output of the extraction to be
+	put into the output file.  Using "-jw" would cause ARJ to prompt
+	for overwrite permission per each file extracted to the output
+	file.
+
+	Example:  ARJ e -jwfile2.doc archive file1.doc
+
+	In the above example, ARJ puts the data from "file1.doc" in the
+	archive into the file "file2.doc".
+
+
+     "-jx" switch
+
+	The "-jx" switch during extraction mode allows the user to specify
+	the file position to start in the output file.	This can be used to
+	append data to an existing file.
+
+	Example:  ARJ e -jx10000 archive file1
+
+	This is similar to using the command "ARJ p archive >> output".
+	To duplicate this redirection with ARJ would require the following:
+
+	ARJ e -jx2000K -jwoutput archive
+
+
+     "-jy" switch
+
+	The "-jy" option allows you to specify the new option characters
+	"y" and "r".  The "y" option sets ARJ to use single character
+	Y/N/A/Q query prompts (yes, no, always, quit).	The "r" option
+	sets ARJ to erase all typeahead before user queries.
+
+	Example:  ARJ e -jyyr archive	  set single character query
+					  and erase typeahead.
+
+	You may set the "-jyyr" option in the environment variable ARJ_SW.
+	There is no way to override such an option once selected.
+
+
+     end document
+
+

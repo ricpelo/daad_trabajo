@@ -1,0 +1,11 @@
+QEDIT no reconoce algunos caracteres espa¤oles. Si se pulsa uno de ellos borra
+la palabra a la izquierda, por lo que hay que introducirlos pulsando ALT y 
+teclenado su c¢digo ASCII en el teclado num‚rico. Estos caracteres son:
+
+    Caracter - C¢digo
+
+        ¤       164
+        ¥       165
+        ¨       168
+        ­       173
+

@@ -1,0 +1,81 @@
+
+   README.DOC					      July 1991
+
+
+   This archive contains ARJ version 2.20.  This is a full featured
+   shareware release.  ARJ is free for non-commercial personal use.
+
+   This software as originally released by the author came in an ARJ
+   self-extracting archive with an ARJ-SECURITY envelope to prevent
+   tampering.  Re-archival of this software will lose this security
+   feature.
+
+   UNARJ is now distributed separately in UNARJ220.EXE.
+
+
+   MAJOR FEATURES OF ARJ INCLUDE:
+
+   ARJ 2.20 currently ranks as the best in overall compression in terms of
+   resulting archive size.
+
+   Option to create multiple volume archives with one command making ARJ
+   useful for making backups to multiple floppies or archiving a very large
+   file to several floppies without "SLICE"ing.
+
+   A separate conversion utility called REARJ to facilitate wholesale
+   conversion of archives to the ARJ format.
+
+   Option to store empty directories.
+
+   Multiple string searching and context display within archives.
+
+   Archive security envelope to resist tampering.
+
+   A myriad of commands and options to provide outstanding flexibility in
+   archiver usage.
+
+
+   THIS ARCHIVE CONTAINS THE FOLLOWING FILES:
+
+   ARJ220.EXE	- An ARJ-SECURED self-extracting archive containing the
+		  following files:
+
+		  ARJ.DOC	 - ARJ user manual
+		  ARJ.EXE	 - Version 2.20
+		  ARJ_BBS.DOC	 - List of ARJ support BBSes
+		  ARJSORT.BAT	 - Sort archive by various parameters
+		  ARJSORT.COM	 - Compiled ARJSORT.BAT file
+		  ARJSORT.DOC	 - ARJSORT user manual
+		  CREDIT.CRD	 - Form for handling credit card orders
+		  LICENSE.DOC	 - License policy for ARJ
+		  ORDERFRM.DOC	 - Order form for ARJ
+		  README.DOC	 - This file
+		  REARJ.CFG	 - Default REARJ configuration file
+		  REARJ.DOC	 - REARJ user manual
+		  REARJ.EXE	 - Archive conversion utility
+		  REGISTER.EXE	 - Program to register ARJ programs
+		  UPDATE.DOC	 - Update to ARJ user manual
+		  WHATSNEW.DOC	 - Changes to ARJ from 1.00 to now
+		  WHY_ARJ.DOC	 - ARJ commercial
+
+   To verify the ARJ-SECURITY envelope and contents of ARJ220.EXE, type:
+
+      ARJ220 -t
+
+   To extract the files in ARJ220.EXE, type:
+
+      ARJ220
+
+      This will extract the files in ARJ220.EXE to the current
+      directory.
+
+   To extract the files in ARJ220.EXE using ARJ.EXE:
+
+      ARJ e ARJ220.EXE
+
+   For users with unusual DOS systems (not 2.11, 3.2, 3.3, 4.0), you may
+   have to rename ARJ220.EXE to ARJSFX.EXE to do the extraction.
+
+   end of readme.doc
+
+

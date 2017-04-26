@@ -1,0 +1,1709 @@
+ 
+ 
+                         QEDIT - the 'Quick Editor'
+                              by Sammy Mitchell
+ 
+                          Version 1.30   July, 1986
+ 
+                              Reference Manual
+ 
+                                   SemWare
+                                136 Mark Lane
+                            Smyrna, Georgia 30080
+ 
+         (C) Copyright 1985, 1986 by SemWare.  All Rights Reserved.
+ 
+                                 DISCLAIMER
+ 
+      SemWare makes no representation or warranties with respect to the
+      contents hereof and specifically disclaims any implied warranties
+      to the suitability of this program for any particular purpose.
+      You must determine that yourself.  In addition, you should
+      understand that using a program of this type on an IBM PC or
+      compatible has inherent risks and that you may inadvertently
+      damage or destroy valuable programs or data.  SemWare expressly
+      declines to assume liability for any use of this program by you,
+      and your use of this program constitutes your agreement to hold us
+      blameless.  SemWare reserves the right to make changes from time
+      to time in the context hereof without obligation to notify any
+      person or persons of such changes.
+ 
+                                  TRADEMARK
+ 
+      MS-DOS is a registered trademark of Microsoft Corporation.
+      PC-DOS is a registered trademark of IBM Corporation.
+      TURBO PASCAL is a registered trademark of Borland International
+      Inc.
+      WordStar is a registered trademark of MicroPro International
+      Corporation.
+      Compaq is a registered trademark of Compaq Inc.
+      Tandy 1000 is a registered trademark of Tandy Corporation.
+ 
+ 
+ 
+ 
+                             Table of Contents:
+ 
+       Acknowledgements
+       0  Summary of Changes
+       1  Introduction
+       2  Features
+       3  System Requirements
+       4  The Program Disk
+       5  Getting Started - and How to Get Out
+       6  Quick Reference
+       7  The Status Line
+       8  Editing Multiple Files
+       9  Windows
+      10  Command Reference
+ 
+                                 Appendices
+ 
+      A) Glossary of Special Terms
+      B) Configuration
+      C) Technical Specifications/Requirements/Limits
+      D) Command Summary
+      E) Some Frequently Asked Questions
+ 
+ 
+ 
+                               Acknowledgments
+ 
+      Many months of work went into the development of QEDIT.  And we
+      had LOTS of help.  Special thanks go to:
+ 
+      Steve Watkins and Alan Brown, for their diligent testing and many
+      suggestions.
+ 
+      Anthony M. Marcy, who developed the INLINER program, an assembler
+      which translates 8088 assembly language directly into Turbo Pascal
+      INLINE code.  If you don't have this program, then get it!
+ 
+      Les and Kathy Heyward, and Cindy Lynch, for scrutinizing our
+      documentation, for their corrections and many suggestions.
+ 
+      My wife, for putting up with all the long hours (and a few all
+      nighters) and time spent on this program.
+ 
+      P.L. Olympia, who has gone out of his way and spent much time
+      promoting this program.
+ 
+      To ALL registered users - THANKYOU - it is only through your
+      support that additional versions are made possible.
+ 
+ 
+ 
+ 
+ 
+                            0. Summary of Changes
+ 
+      *** Version 1.30  07/21/86  New Version!
+ 
+      Features/commands new to version 1.30 of QEDIT:
+      SIX new commands:
+      - GExit - this command executes the exit command for all files
+        currently edited.  Nice from quitting multiple files.  Defaults
+        to the Alt-x key.
+      - DeleteLeftWord - similar to the DeleteRightWord command, but
+        it deletes the word to the LEFT of the cursor.  Defaults to
+        the ^Backspace key.
+      - AppendScrBuff - appends the marked block to the end of the
+        named scratch buffer.  Defaults to ^BA.
+ 
+      NOTE that the following commands can also be set/configured with the
+      configuration program, QCONFG.
+      - SetTabWidth - allows you to set the tabs width between 1 and 12.
+        Defaults to ^KT
+      - ToggleAutoIndent - toggle between AutoIndent and normal tabbing.
+        Defaults to ^QI
+      - TabsOut - If TabsOut is on, then tabs are actually inserted in
+        any lines that are updated by editing. Note that if TabsOut is
+        off, then as the file is written to disk, tabs are expanded.
+        Defaults to ^QO.
+ 
+      The ALT key-pad can be used to enter ANY desired character into
+      the edited text.  To enter 'Í' then just key 'ALT 2 0 5'.
+ 
+      The replace command now has a Selective Replace option.  Select
+      'S' as one of the options when executing the Replace command.
+ 
+      The ESCAPE command is now operational from ANY QEDIT prompt.
+ 
+      Version 1.30 will now create a '.bak' file when you change an
+      existing file.  This option is configurable.
+
+      The LastPlace command has been removed from version 1.30.
+ 
+      *** Version 1.25A 05/01/86  Maintenance Version
+ 
+      Fixed bug that resulted in a runtime error when lines longer
+      than 255 were created via deleting newlines.
+ 
+      *** Version 1.25  03/08/86  Maintenance Version
+ 
+      - The SHELL command did not work on systems with lots of extra
+        memory (more than 512k).  Fixed.
+      - A new command, Called ESCAPE, added to allow you to 'escape'
+        from most QEDIT user prompts.  Defaults to the ESC key.
+      - The initial input buffer allocation routines have been reworked,
+        to give a slight performance advantage.
+      - The size of the TwoKey buffer has been increased by 30 bytes.
+        The size is now 100 bytes.  This will allow approximately 40
+        TwoKey commands to be defined during configuration.
+      - Initial settings of the mode (Insert or Overlay) is now
+        configurable.
+      - QCONFG now allows you to keep QEDIT from changing the original
+        cursor size/shape.
+      - QCONFG now allows you to make QEDIT ignore vertical and
+        horizontal retrace.  This really only applies to users with
+        an EGA or other enhanced graphic adapters (such as the ones
+        that come with the Compaq's and AT&T's 6300 computers).
+      - You cannot reserve less than 8 or more than 32767 paragraphs
+        with the reserve option of QCONFG.  (NOTE that you can still
+        elect to reserve 0 paragraphs).
+ 
+      *** Version 1.20  02/27/86  New Version!
+ 
+      Features/commands new to version 1.2 of QEDIT:
+      - The SHELL command.  This command allows you to 'exit' to DOS,
+        and then return to the editor by simply typing 'exit'.
+      - Split screen editing.  Two files may be displayed at once, in
+        different windows.
+      - SHIFT commands.  The cursor line or the currently defined block
+        (if the cursor resides in it) may be shifted left or right by
+        pressing a key.  Handy for changing the indentation of blocks of
+        code.
+      - Scratch Buffers now take a full 12 character name, instead of
+        just a single character name.
+      - Insert/OverWrite indicator displayed on the Status Line.  Also,
+        the insert cursor is smaller in size than in release 1.00.
+      - The amount of memory that QEDIT uses can be limited during
+        configuration.  Handy to keep COMMAND.COM from needing to be
+        reloaded, or for use in multi-tasking environments.
+      - QEDIT now restores the screen/cursor attributes correctly upon
+        exit.
+      - The BLOCKMOVE command is about 50% faster than in release 1.00.
+      - Usage of the configuration program (QCONFG) has been simplified.
+      - And, the BACKSPACE command will now remove the newline from the
+        preceding line, if issued in column 1!  (I've been listening!)
+ 
+      *** Version 1.00A 11/23/85  Maintenance Version
+ 
+      Oops!  Somehow a bug sneaked into the video display routines.  The
+      result was that QEDIT 'hung' PC'S with color displays.  Special
+      thanks to Gerhard Barth, the sysop of the TAMIAMI BBS, who went
+      above and beyond the call of duty to help us track down this bug.
+ 
+      *** Version 1.00  11/20/85  Initial Release Version
+ 
+ 
+ 
+                               1. Introduction
+ 
+      "You can never be too rich, too thin, or have too much ram and
+      disk storage."
+ 
+                     Ancient American proverb, ca. 1980
+ 
+ 
+      This manual describes the use and operation of QEDIT, a
+      full-screen text editor for the IBM PC and compatible computers.
+      The manual includes installation instructions, overview of QEDIT's
+      major features, and reference for all of QEDIT's commands.
+ 
+      QEDIT is a text editor as opposed to a word processor.  QEDIT can
+      be used to write short documents or letters, (this manual was
+      written with QEDIT and then formatted with a formatting program)
+      but most of its features are geared to creating or maintaining
+      program source code.
+ 
+      QEDIT's personality is heavily influenced by the goals set in
+      developing QEDIT.  These were and are:
+ 
+      1) Fast operation - above all else, QEDIT was designed to operate
+         quickly, especially in these areas:
+         - reading a file from disk to the editing buffer.
+         - screen displaying/updating.
+         - movement through the editing window.
+         - searching for text.
+         - writing text back out to disk.
+ 
+      2) Compact - Every effort was made to keep the code size as small
+         as possible.  Even though memory is getting cheaper all the
+         time, we didn't want QEDIT to require any more memory than
+         absolutely necessary.
+ 
+ 
+ 
+ 
+                                 2. Features
+ 
+      Features of QEDIT:
+ 
+         - VERY FAST!
+         - SMALL (only 32k)
+         - Uses all available memory.  You can edit files as large as
+           memory allows with QEDIT.
+         - True multi-file editing - number of files edited is limited
+           only by memory.
+         - The screen may be split to view two files at the same time.
+         - 99 scratch buffers for cut and paste/templates operations.
+         - Exit temporarily to DOS from within the editor.
+         - Configurable - if you don't like the way we've configured
+           QEDIT, you can easily change it.  This includes the meaning
+           of ALL special keys on the keyboard (Ctrl, the function keys,
+           Alt, Home, PgUp, Etc.)
+ 
+ 
+ 
+ 
+                           3. System Requirements
+ 
+      QEDIT will run on the IBM PC, PC/XT, PC/AT, PC/Jr, and 100%
+      compatible computers including the Compaq, NCR, Tandy 1000, and
+      WYSE PC's.  Minimum requirements are:
+ 
+      96 KB of memory (although QEDIT will use up to 640 KB if it is
+      available).
+ 
+      PC-DOS or MS-DOS 2.0 or greater.
+ 
+      One diskette drive.
+ 
+      Either a color or a monochrome monitor with 80 column display.
+ 
+ 
+ 
+ 
+                             4. The Program Disk
+ 
+      These are the files that come on the QEDIT program diskette:
+ 
+         Q.COM        - The QEDIT editor.
+         QCONFG.COM   - This is the configuration program for QEDIT.
+         QKEY.DEF     - This is the default keyboard definition file for
+                        QEDIT.
+         WSKEY.DEF    - This is a keyboard definition file to make QEDIT
+                        behave similar to the TURBO PASCAL editor or
+                        WordStar.
+         MYKEY.DEF    - This is an undefined keyboard definition file
+                        that you can set up anyway you like.
+         QEDIT.DOC    - This manual in ASCII text format.
+         Q.HLP        - A brief help file that can be loaded into the
+                        editor.
+ 
+      Unlike many copy-protected programs, the QEDIT program disk may be
+      freely copied.  You can move the program, help and manual files
+      onto another floppy, or a hard disk.
+ 
+      NOTE: It is your responsibility to make backup copies of the
+      program disk we send you.  Never use your program disk without
+      making such a backup copy.
+ 
+      NOTE: When we refer to the QEDIT program in this manual, we
+      actually mean the Q.COM file on the distribution diskette.  You
+      are free to rename Q.COM to whatever seems right to you.  If you
+      use the configuration program, then you must make sure to rename
+      the QEDIT program to Q.COM, as this is what QCONFG expects.
+ 
+ 
+ 
+ 
+                   5. Getting Started - and how to Get Out
+ 
+      There are two ways to start QEDIT.  From the DOS prompt type:
+ 
+      1) Q filespec
+ 
+         where filespec is the name of the file you want to edit in the
+         standard format, i.e., d:filename.ext.
+ 
+         Using this format, QEDIT will 'read' filespec into memory if it
+         exists, or create it if it does not, and allow you to start
+         editing this file.
+ 
+      or:
+ 
+      2) Q
+ 
+         If you just type Q, QEDIT will prompt you for the file you wish
+         to edit.  Pressing return without entering a filespec will exit
+         QEDIT.
+ 
+ 
+      There are several commands that will get you out of QEDIT.  The
+      most basic are the FILE command and the QUIT command.
+ 
+      The FILE command will write the file in memory back to disk and
+      then QUIT the editor.  The pre-installed FILE command is activated
+      by pressing ^KX.  (This means to press the Ctrl and K keys at the
+      same time, release them, then to press the X key - note that the
+      case of the key is ignored.)
+ 
+      The QUIT command will 'quit' the file in memory without changing
+      anything on disk.  If the file in memory has been changed, then
+      QEDIT requests confirmation before actually quitting.  The
+      pre-installed QUIT command is activated by pressing ^KQ.  (This
+      means to press the Ctrl and K keys at the same time, release them,
+      then to press the Q key - note that the case of the key is
+      ignored.)
+ 
+ 
+ 
+ 
+                             6. Quick Reference
+ 
+      ---- Cursor movement commands -----------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      BottomOfScreen      ^End
+      CursorDown          down arrow key
+      CursorLeft          left arrow key
+      CursorRight         right arrow key
+      CursorUp            up arrow key
+      EndOfLine           End key
+      FirstOfLine         Home key
+      NewLine             ---
+      Return              return key
+      TabLeft             shift tab key
+      TabRight            tab key
+      TopOfScreen         ^Home
+      WordLeft            ^left arrow
+      WordRight           ^right arrow
+ 
+      ---- Scroll (move screen) commands ------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      BottomOffile        ^PgDn
+      HalfPgDn            ---
+      HalfPgUp            ---
+      JumpToLine          ^J
+      MakeTopOfScreen     F5
+      PgDn                PgDn key
+      PgUp                PgUp key
+      ScrollDown          ^Z
+      ScrollUp            ^W
+      TopOfFile           ^PgUp
+ 
+      ---- Delete and Insert commands ---------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      AddLine             F2
+      Align               ^A
+      BackSpace           BackSpace key
+      DeleteChar          Del key
+      DeleteLine          ^Y
+      DeleteLeftWord      ^BackSpace
+      DeleteRightWord     ^T
+      DeleteToEOL         ^QY and F6
+      DupLine             F4
+      Return              return key
+      SplitLine           ^N
+      ShiftLeft           shift F7
+      ShiftRight          shift F8
+ 
+      ---- Find and Replace commands ----------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      Find                ^QF
+      RepeatLastFindOrRep ^L
+      Replace             ^QA
+ 
+      ---- File commands ----------------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      EditFile            ^KE
+      Exit                ^KD
+      FileidChange        ^KF
+      FileToMain          ---
+      FileToSystem        ^KX
+      GExit               Alt-X
+      KillFile            ^KZ
+      NextFile            ^KN
+      PQuitToSystem       ^KQ
+      PQuitToMain         F3
+      PrevFile            ^KP
+      QQuit               ---
+      ReadFile            ^KR
+      SaveFile            ^KS
+      WriteBlock          ^KW
+ 
+      ---- Block commands ---------------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      CopyBlock           Alt-C
+      GroupDelete         Alt-G
+      MarkLine            Alt-L
+      MoveBlock           Alt-M
+      UnMarkBlock         Alt-U
+      WriteBlock          ^KW
+ 
+      ---- Scratch Buffer commands ------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      AppendScrBuff       ^BA
+      LoadScrBuff         ^BL
+      StoreScrBuff        ^BS
+      ZapScrBuff          ^BZ
+ 
+      ---- Windowing commands -----------------------
+      SplitScreen         ^OS
+      OneWindow           ^O1
+      NextWindow          ^ON
+      PrevWindow          ^OP
+ 
+      ---- Miscellaneous commands -------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      Escape              ESC
+      SetTabWidth         ^KT
+      Shell               F9
+      TabsOut             ^QO
+      ToggleAutoIndent    ^QI
+      ToggleTabsExpand    ^QT
+      ToggleIns           Ins key
+      UnDoCursorLine      ^QL
+ 
+ 
+ 
+ 
+                          7. The Status Line
+ 
+      The status line is used by QEDIT to tell you the current status of
+      the file you are editing, and also used when QEDIT needs
+      information from you.  The items displayed on the status line,
+      from right to left, are:
+ 
+      The files drive, then name:  A:JUNK.TXT
+      The line number of the cursorline:  L 492
+      The column that the cursor resides in:  C 48
+      The mode of operation, Inert or Overwrite:  INS
+      The approximate amount of memory available in K:  M 86
+ 
+ 
+ 
+ 
+                          8. Editing Multiple Files
+ 
+      This editor is a true multi-file editor.  By true we mean that
+      multiple files can be kept in memory at the same time.  Switching
+      back and forth between files can be done at the touch of a key and
+      is instantaneous.  A simple explanation of how the editor handles
+      multiple files will help you in using the multiple file commands.
+ 
+      Edited files are kept in a 'ring' in memory.  When a new file is
+      edited, that file is inserted in the ring immediately after the
+      currently edited file, and it becomes the new current file.  The
+      other file becomes the previous file.  When a file is 'Quit', then
+      that file is deleted from the ring and the previous file in the
+      ring becomes the new current file.  If there is only one file
+      being edited, then the previous, next and current files are all
+      the same file.  Switching between files is accomplished with the
+      NextFile and PrevFile commands.
+ 
+ 
+ 
+ 
+                            9. Windows
+ 
+      This version of QEDIT supports simple split screen editing.
+      Commands are available to:
+ 
+      a) Split the current screen into two windows.  Note that there
+         must already be two files loaded into memory when this command
+         is executed, and the screen must not already be 'split'.  Use
+         the SplitScreen command.
+ 
+      b) Change back and forth between windows.  Use the NextWindow
+         and the PrevWindow commands.
+ 
+      c) Make the current window the ONLY window on the screen.  Use the
+         OneWindow command.
+ 
+      To copy text between windows, you can:
+      a) Mark the text to be copied/moved.
+      b) Store the text in a scratch buffer.
+      c) Change to the other window.
+      d) Load the text from the appropriate scratch buffer.
+ 
+ 
+ 
+ 
+                           10. Command Reference
+ 
+      Cursor Movement Commands:
+ 
+      Unless specified otherwise, the Cursor Movement commands act
+      non-destructively, i.e. they do not change any information in the
+      file being edited.
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      BottomOfScreen      ^End
+ 
+                          Moves the cursor to the next to last line of
+                          the screen.  That line becomes the new
+                          CursorLine.
+ 
+      CursorDown          DownArrow
+ 
+                          Moves the cursor to the line below.  If the
+                          cursor is on the next to last line of the
+                          screen, then the screen scrolls up one line.
+ 
+      CursorLeft          LeftArrow
+ 
+                          Moves the cursor one character to the left.
+                          When the cursor reaches the left edge of the
+                          screen, it stops, unless the text has been
+                          scrolled right, in which case the text scrolls
+                          left.
+ 
+      CursorRight         RightArrow
+ 
+                          Moves the cursor one character to the right.
+                          When the cursor reaches the right end of the
+                          screen, the text starts scrolling horizontally
+                          until the cursor reaches the maximum line
+                          length, in which case the scrolling stops.
+ 
+      CursorUp            UpArrow
+ 
+                          Moves the cursor to the line above.  If the
+                          cursor is on the top line of the screen, then
+                          the screen scrolls down one line.
+ 
+      EndOfLine           END
+ 
+                          The cursor moves to the position immediately
+                          following the last non blank character on the
+                          line containing the cursor.  If the line is
+                          blank, then the cursor moves to column one.
+ 
+      FirstOfLine         HOME
+ 
+                          The cursor moves to column one of the line
+                          containing the cursor.
+ 
+      NewLine             not pre-installed
+ 
+                          Is the equivalent of the following two
+                          commands: CursorDown, FirstOfLine.
+ 
+      Return              Return key
+ 
+                          The return command behaves differently
+                          depending on whether the editor is in Insert
+                          or OverWrite mode.
+ 
+                          In OverWrite mode, the return command behaves
+                          as if you executed the following command:
+                          NewLine.
+ 
+                          In Insert mode, the return command behaves as
+                          if you executed the following commands:
+                          SplitLine, NewLine, Align.
+ 
+      TopOfScreen         ^Home
+ 
+                          Moves the cursor to the top of the screen.
+                          That line becomes the new CursorLine.
+ 
+      WordLeft            ^LeftArrow
+ 
+                          Moves the cursor to the end of the word to the
+                          left of the cursor.  If there is not a word to
+                          the left of the cursor, then the cursor will
+                          move to column one.  If this command is
+                          executed when the cursor is in column one,
+                          then the cursor moves to the EndOfLine on the
+                          previous line.
+ 
+      WordRight           ^RightArrow
+ 
+                          Moves the cursor to the beginning of the word
+                          to the right of the cursor.  If there is not a
+                          word to the right of the cursor, then the
+                          cursor will move to the EndOfLine.  If this
+                          command is executed when the cursor is already
+                          at the EndOfLine, then the cursor moves to
+                          column one on the following line.
+ 
+ 
+      Tab commands:
+ 
+      In the current version, tabs can be used in one of two modes.
+      AutoIndent or normal tab mode.  In the AutoIndent mode, there are
+      no fixed tab positions.  Instead, tab positions are automatically
+      set to the beginning (for the tab right command, or the end for
+      the tab left command) of each blank delimited group of characters
+      on the line immediately above the cursor.  If there is not a line
+      immediately above the cursor or the line immediately above the
+      cursor is blank, then there will not be any tab positions for that
+      line.  In normal tab mode, then tabs are set at every nth
+      position, where n is a number between 1 and 12, and can be set via
+      the SetTabWidth command.
+ 
+      SetTabWidth         ^KT
+ 
+                          You will be prompted to enter a new tab width
+                          between 1 and 12.  This command's default
+                          value can also be set by the configuration
+                          program.
+ 
+      TabsOut             ^QO
+ 
+                          This command turns TabsOut on and off.  If
+                          TabsOut is on, then tabs are actually inserted
+                          in any lines that are updated by editing.
+                          Note that if TabsOut is off, then as the file
+                          is written to disk, tabs are expanded using
+                          the current TabWidth.
+ 
+      TabRight            Tabkey
+ 
+                          The TabRight command behaves differently
+                          depending on whether the editor is in Insert
+                          or OverWrite mode.
+ 
+                          In OverWrite mode, the cursor is moved to the
+                          next tab position as defined above.  The
+                          characters over which the cursor moves are not
+                          affected.
+ 
+                          In Insert mode, the cursor is moved to the
+                          next tab position as defined above.  The text
+                          to the right of and including the cursor, is
+                          shifted the number of characters the cursor is
+                          moved.
+ 
+      TabLeft             shift Tab
+ 
+                          The TabLeft command behaves differently
+                          depending on whether the editor is in Insert
+                          or OverWrite mode.
+ 
+                          In OverWrite mode, the cursor is moved to the
+                          previous tab position as defined above.  The
+                          characters over which the cursor moves are not
+                          affected.
+ 
+                          In Insert mode, the cursor is moved to the
+                          previous tab position as defined above.  The
+                          text of the line is shifted left the number of
+                          characters that the cursor is moved.
+ 
+      ToggleAutoIndent    ^QI
+ 
+                          This command toggles between AutoIndent mode
+                          and normal tab mode.
+ 
+ 
+      Scroll (Move Screen) Commands:
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+ 
+      BottomOffile        ^PgDn
+ 
+                          Positions the cursor on the first character of
+                          the last line of the file, which is made the
+                          new last line of the screen.
+ 
+      HalfPgDn            F8
+ 
+                          Scrolls the screen toward the end of the file
+                          one half page.
+ 
+      HalfPgUp            F7
+ 
+                          Scrolls the screen toward the top of the file
+                          one half page.
+ 
+      JumpToLine          ^J
+ 
+                          The jump command allows the user to 'jump' to
+                          the indicated line number.  The user is
+                          queried for the line number to jump to.  The
+                          requested line becomes the new Top Of Screen
+                          line.  The command can be aborted by pressing
+                          the return key without entering a line number.
+ 
+      MakeTopOfScreen     F5
+ 
+                          Scrolls the screen so that the CursorLine
+                          becomes the new top of screen line.
+ 
+      PgUp                PgUp
+ 
+                          Scrolls the screen toward the top of the file
+                          one page minus one.
+ 
+      PgDn                PgDn
+ 
+                          Scrolls the screen toward the end of the file
+                          one page minus one.
+ 
+      ScrollDown          ^Z
+ 
+                          Scrolls down toward the end of the file, one
+                          line at a time (the entire screen scrolls up).
+                          The cursor remains on the same text line until
+                          it reaches the top of the screen.
+ 
+      ScrollUp            ^W
+ 
+                          Scrolls up toward the beginning of the file,
+                          one line at a time (the entire screen scrolls
+                          down).  The cursor remains on the same text
+                          line until it reaches the next to last line on
+                          the screen.
+ 
+      TopOfFile           ^PgUp
+ 
+                          Positions the cursor on the first character of
+                          the first line of the file, which is made the
+                          new top of screen line.
+ 
+ 
+ 
+ 
+ 
+      Delete and Insert Commands:
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      AddLine             F2
+ 
+                          A new line, with the current mask value, is
+                          added after the CursorLine and becomes the new
+                          CursorLine.  The default mask value is blank.
+ 
+      Align               ^A
+ 
+                          Aligns the text of CursorLine with the text of
+                          the line immediately before the CursorLine.
+                          The cursor is not moved.  If the CursorLine is
+                          line one, or the line immediately before is
+                          blank, or the CursorLine is blank, then this
+                          command does nothing.
+ 
+      BackSpace           BackSpace key
+ 
+                          Deletes the character to the left of the
+                          cursor.  If the cursor is in column one, then
+                          the cursorline is merged with previous line.
+ 
+      DeleteChar          Del
+ 
+                          Deletes the character the cursor is currently
+                          at the cursor.  Text to the right of the
+                          cursor shifts left one position.
+ 
+      DeleteLeftWord      ^BackSpace
+ 
+                          Deletes the word to the left of the cursor.
+ 
+      DeleteLine          ^Y, Alt-D
+ 
+                          Deletes the CursorLine, making the line after
+                          the CursorLine become the new CursorLine.  If
+                          the CursorLine is the last line of the file
+                          when this command is issued, then the line
+                          before the CursorLine becomes the new
+                          CursorLine.
+ 
+      DeleteRightWord     ^T
+ 
+                          Deletes the word to the right of the cursor.
+ 
+      DeleteToEOL         ^QY and F6
+ 
+                          Deletes from the cursor position to the End of
+                          the line, including the character at the
+                          cursor.
+ 
+      DupLine             F4
+ 
+                          The CursorLine is duplicated, with the
+                          duplicated line becoming the new CursorLine.
+ 
+      Return              Return key
+ 
+                          The return command behaves differently
+                          depending on whether the editor is in Insert
+                          or OverWrite mode.
+ 
+                          In OverWrite mode, the return command behaves
+                          as if you executed the following command:
+                          NewLine.
+ 
+                          In Insert mode, the return command behaves as
+                          if you executed the following commands:
+                          SplitLine, NewLine, Align.
+ 
+      ShiftLeft           shift-F7
+ 
+                          This command allows you to shift the
+                          cursorline or the marked block to the left one
+                          position.  If the cursorline resides in a
+                          marked block when the command is executed,
+                          then the entire block is shifted.  If the
+                          cursorline is NOT in a marked block, then only
+                          the cursorline is shifted.  This command is
+                          very handy for changing indentation levels in
+                          highly structured code, i.e., removing or
+                          adding an if statement to a block of code.
+ 
+      ShiftRight          shift-F8
+ 
+                          This command allows you to shift the
+                          cursorline or the marked block to the right
+                          one position.  If the cursorline resides in a
+                          marked block when the command is executed,
+                          then the entire block is shifted.  If the
+                          cursorline is NOT in a marked block, then only
+                          the cursorline is shifted.  This command is
+                          very handy for changing indentation levels in
+                          highly structured code, i.e., removing or
+                          adding an if statement to a block of code.
+ 
+      SplitLine           ^N
+ 
+                          The CursorLine is split at the cursor
+                          position.  All text following and including
+                          the cursor position is placed on a new line,
+                          immediately following the CursorLine.  The
+                          cursor does not move.
+ 
+      Find and Replace Commands:
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      Find                ^QF
+ 
+                          The find command allows the user to find a
+                          simple string within the current file.  The
+                          user is prompted for a search string and then
+                          for options wanted.  Pressing just the return
+                          key in response to the search string will
+                          abort the command.  Options available are:
+                          Forward search, Backward search, Respect case
+                          of search string, Ignore case of search
+                          string.  The options in affect are shown in
+                          uppercase, while the options not in affect are
+                          shown in lowercase. [F,b, I,r] - to select an
+                          option just enter the appropriate letter.  To
+                          search Backward and Respect the case of the
+                          search string, the user would enter: BR <CR>
+                          (NOTE that the default options never have to
+                          be entered as they default if not selected.)
+ 
+ 
+      Replace             ^QA
+ 
+                          The replace command allows the user to
+                          globally find and replace simple strings
+                          within the current file.  The user is prompted
+                          for a search string, a replace string, and
+                          then for any search options.  Pressing just
+                          the return key in response to the search
+                          string will abort the command.  Options
+                          available are: Forward search, Backward
+                          search, Respect case of search string, Ignore
+                          case of search string, Global replace,
+                          Selective replace.  The options in affect are
+                          shown in uppercase, while the options not in
+                          affect are shown in lowercase. [F,b, R,i, G,s]
+                          - to select an option just enter the
+                          appropriate letter.  To search and replace
+                          Forward, ignoring the case of the search
+                          string, the user would enter: FI <CR> (NOTE
+                          that the default options never have to be
+                          entered as they default if not selected.)
+                          Note that if the selective search option is
+                          chosen, then the user must use the
+                          RepeatLastFindOrRep command (below) to keep
+                          finding/replacing.
+ 
+      RepeatLastFindOrRep ^L
+ 
+                          This command will re-execute the last Find or
+                          Replace command issued.  The user is NOT
+                          prompted for any information, as the
+                          information used in the last find or replace
+                          is used.
+ 
+ 
+ 
+ 
+ 
+      File Commands:
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      EditFile            ^KE
+ 
+                          The EditFile command is used to edit multiple
+                          files in one session.  This command prompts
+                          the user for a file to edit.  Pressing return
+                          without entering a file specification will
+                          abort the command.  If a valid file
+                          specification is entered, then that file will
+                          be read into memory and become the current
+                          file.  The previous file that was being edited
+                          is not changed and is still available in
+                          memory - see the commands NextFile and
+                          PrevFile for information on switching files.
+                          See the NextFile and PrevFile commands for
+                          information on how to switch between files.
+ 
+ 
+      Exit                ^KD
+ 
+                          The Exit command can be used to quit the
+                          current file, returning control to the opening
+                          screen if the ring of files is empty, or
+                          making the previous file in the ring the new
+                          current file if the ring is not empty.  If the
+                          file has been changed, the user is given the
+                          option of saving it before quitting, or of
+                          aborting the command.  If the file has not
+                          been changed, then the file is purged from
+                          memory.
+ 
+ 
+      FileidChange        ^KF
+ 
+                          The FileidChange command allows the user to
+                          change the fileid of the current file.
+ 
+ 
+      FileToMain          not pre-installed
+ 
+                          The FileToMain command will write the current
+                          file to disk, and if there are no more files
+                          left in the ring, return control to the
+                          opening screen.  If there are more files in
+                          the ring, then the previous one becomes the
+                          new current file.  See the FileToSystem
+                          command.
+ 
+ 
+      FileToSystem        ^KX
+ 
+                          The FileToSystem command will write the
+                          current file to disk, and if there are no more
+                          files left in the ring, return control to the
+                          operating system.  If there are more files in
+                          the ring, then the previous one becomes the
+                          new current file.  See the FileToMain command.
+ 
+      GExit               Alt-X
+ 
+                          Global Exit command.  This command will issue
+                          the Exit command for every file currently
+                          being edited.  Responding 'N' or ESCAPE to a
+                          "save prompt" will abort the command.
+ 
+      KillFile            ^KZ
+ 
+                          This command will erase the current file from
+                          disk.  The user is given the chance to abort
+                          the command before the file is erased.
+ 
+ 
+      NextFile            ^KN
+ 
+                          The NextFile command will make the next file
+                          in the ring become the new current file, with
+                          the previous current file becoming the
+                          previous file in the ring.  See the PrevFile
+                          command.
+ 
+ 
+      PQuitToMain         ^KQ
+ 
+                          The PQuitToMain command will purge the current
+                          file from memory and, if the ring of files is
+                          empty, return to the opening screen.  If the
+                          ring of files is not empty, then the previous
+                          file in the ring will become the new current
+                          file.  If the file has been changed, the user
+                          is given the choice of continuing or aborting
+                          the command.
+ 
+ 
+      PQuitToSystem       F3
+ 
+                          The PQuitToSystem command will purge the
+                          current file from memory and, if the ring of
+                          files is empty, return to the control to the
+                          operating system.  If the ring of files is not
+                          empty, then the previous file in the ring will
+                          become the new current file.  If the file has
+                          been changed, the user is given the choice of
+                          continuing or aborting the command.
+ 
+ 
+      PrevFile            ^KP
+ 
+                          The PrevFile command will make the previous
+                          file in the ring become the new current file,
+                          with the previous current file becoming the
+                          next file in the ring.  See the NextFile
+                          command.
+ 
+ 
+      QQuit               not pre-installed
+ 
+                          The QQuit command does an unconditional
+                          immediate quit on the current file.  The file
+                          is abandoned without any warning, regardless
+                          of any changes that may have been made to it.
+                          Use it with care.
+ 
+ 
+      ReadFile            ^KR
+ 
+                          The ReadFile command can be used to insert an
+                          external disk file into the current file being
+                          edited.  The external file is inserted into
+                          the current file after the CursorLine, and the
+                          inserted file becomes 'marked', as if it had
+                          been marked with the MarkLine command.  The
+                          user is prompted for the name of the file to
+                          insert.
+ 
+ 
+      SaveFile            ^KS
+ 
+                          The SaveFile command will write to disk the
+                          current file being edited, replacing the
+                          previous file on disk, if it already exists.
+                          The file remains in memory, ready for
+                          additional editing.
+ 
+ 
+      WriteBlock          ^KW
+ 
+                          See the description of the WriteBlock command
+                          in the section titled 'Block Commands:'.
+ 
+ 
+ 
+      Block Commands:
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      CopyBlock           Alt-C
+ 
+                          The CopyBlock command will copy a marked block
+                          to the position after the CursorLine.  The
+                          original block is left unchanged.  If there is
+                          not a marked block, then this command has no
+                          affect.
+ 
+ 
+      GroupDelete         Alt-G
+ 
+                          The GroupDelete command will delete a marked
+                          block.  If there is not a marked block, then
+                          this command has no affect.
+ 
+ 
+      MarkLine            Alt-L
+ 
+                          Use the MarkLine to mark a line for use by
+                          other block commands.  The area 'marked' by
+                          the MarkLine command is shown in reverse
+                          video.  To mark a group of lines, first mark
+                          the starting line, then move the cursor to
+                          where the ending line is, then mark it.  This
+                          will mark the entire area including the
+                          starting and ending lines.
+ 
+ 
+      MoveBlock           Alt-M
+ 
+                          The MoveBlock command will move a marked block
+                          to the position after the CursorLine.  The
+                          original block is deleted.  This command is
+                          equivalent to issuing a CopyBlock command,
+                          then remarking the original block and then
+                          issuing a GroupDelete command.  If there is
+                          not a marked block, then this command has no
+                          affect.
+ 
+ 
+      UnMarkBlock         Alt-U
+ 
+                          Use this command to 'unmark' a marked block.
+                          If there is not a marked block, then this
+                          command has no affect.
+ 
+ 
+      WriteBlock          ^KW
+ 
+                          The WriteBlock command will write the marked
+                          block in the current file to disk.  The user
+                          is prompted for a file specification.  If the
+                          file already exists, then confirmation is
+                          required to replace it.
+ 
+ 
+ 
+ 
+      Scratch Buffer Commands:
+ 
+      The editor can create up to 99 scratch pad buffers.  Each buffer
+      is given a name of your choosing, limited to 12 characters.
+      Currently supported functions using the buffers are: 1) storing
+      text to a buffer 2) retrieving text from a buffer 3) deleting a
+      buffer
+ 
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      AppendScrBuff       ^BA
+ 
+                          This command will append the currently marked
+                          block to the end of the named scratch buffer,
+                          i.e., the current contents of the named
+                          scratch buffer are NOT lost, the block is
+                          added to the end of it.
+ 
+ 
+      LoadScrBuff         ^BL
+ 
+                          This command will insert the contents of the
+                          named buffer after the CursorLine.  The
+                          scratch buffer is left unchanged.  The user is
+                          prompted for the name of the buffer to load
+                          from.
+ 
+ 
+      StoreScrBuff        ^BS
+ 
+                          This command will store the marked block to a
+                          named buffer.  The user is prompted for the
+                          buffer name to store to.  If the buffer does
+                          not exist it is created.  If the buffer
+                          exists, then its current contents are lost.
+ 
+ 
+      ZapScrBuff          ^BZ
+ 
+                          This command will 'zap' (delete) the named
+                          scratch buffer.  The user is prompted for the
+                          buffer name.
+ 
+ 
+ 
+      Windowing Commands:
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      OneWindow           ^O1
+ 
+                          This command makes the current window the only
+                          window on the screen.  If there is only one
+                          window when this command is executed, then the
+                          command is ignored.
+ 
+      NextWindow          ^ON
+ 
+                          This command makes the next window on the
+                          screen the new current window.  It is one of
+                          the commands available to change windows.  If
+                          there is only one window when this command is
+                          executed, then the command is ignored.
+ 
+      PrevWindow          ^OP
+ 
+                          This command makes the previous window on the
+                          screen the new current window.  It is one of
+                          the commands available to change windows.  If
+                          there is only one window when this command is
+                          executed, then the command is ignored.
+ 
+      SplitScreen         ^OS
+ 
+                          This command will split the screen into two
+                          separate windows, and display the next file in
+                          the in memory ring in the second window, also
+                          making it the current window.  Please NOTE
+                          that this command requires that their be at
+                          least two files loaded into memory when it is
+                          executed.  If there is only one file in memory
+                          when this command is executed, then the
+                          command is ignored.
+ 
+ 
+ 
+ 
+      Miscellaneous Commands:
+ 
+      COMMAND             DEFAULT KEY(S)
+ 
+      Escape              ESC
+ 
+                          This command allows you 'escape' from any
+                          QEDIT prompts.  Any prompt or explicit "press
+                          certain key" prompt can be exited by pressing
+                          the key the ESCAPE command is assigned to.
+ 
+      Shell               F9
+ 
+                          This command allows you to exit the editor
+                          temporarily, and to invoke a second copy of
+                          the command processor.  As long as there is
+                          enough extra memory available, then you can
+                          execute essentially any commands that you
+                          would normally execute from the DOS command
+                          level.  Once you are finished, then you can
+                          return to the editor by entering the return
+                          command, 'exit'.  Your editing session will be
+                          exactly as you left it.
+ 
+                          Caution: You should NOT load (execute for the
+                          first time) any commands from the 'shell' that
+                          remain resident (the DOS print command, or any
+                          of the keyboard macro programs, resident note
+                          pad programs, appointment calendars, etc).  It
+                          is perfectly legal to invoke these from the
+                          'shell' if they have been loaded prior to
+                          invoking the editor.  If you DO load resident
+                          programs from the 'shell', then due to DOS'es
+                          scheme of memory management then your amount
+                          of available memory will be drastically
+                          reduced until you 'reboot' your system.  Also,
+                          please remember that the editor cannot 'check'
+                          programs you execute to make sure that they
+                          behave properly.  This is probably NOT the
+                          place to test programs, and definitely not the
+                          place to run programs that alter memory that
+                          they did NOT allocate from DOS. Thus all DOS
+                          non-resident utility commands and commercial
+                          programs should work perfectly fine from the
+                          'shell'
+ 
+      UnDoCursorLine      ^QL
+ 
+                          This command will let you 'undo' changes made
+                          to the CursorLine as long as the cursor does
+                          not move to a new CursorLine.
+ 
+      ToggleIns           Ins
+ 
+                          This command toggles between Insert and
+                          OverWrite modes.  Initially set to OverWrite
+                          mode.
+ 
+      ToggleTabsExpand    ^QT
+ 
+                          This command toggles between Dynamic tab
+                          expansion or no tab expansion.  Initially set
+                          to no tab expansion.
+ 
+ 
+ 
+ 
+      Appendix A) Glossary of Special Terms
+ 
+ 
+      Terms used:
+ 
+      ^                   When used in reference to the keyboard,
+                          means the Ctrl key.  For example, ^X means the
+                          Ctrl X key.  To execute a command labeldd ^,
+                          you would first press the Ctrl key, then,
+                          without releasing it press the X key.  (the
+                          CASE o& the character is ig.ored in Ctrl key
+                          commands, so that ^X and ^x are both
+                          interpreted as ^X.
+ 
+                          Sometimes a command is referred to as: ^KD.
+                          This means that this particular command
+                          requires you to first press the Ctrl key, then
+                          without releasing it press the K key then the
+                          D key.  Note that the Ctrl key can optionally
+                          be released before pressing the second key.
+ 
+      <CR>                Is interpreted as the Return key.  If this
+                          occurs in a text string, then it means to
+                          press the Return Key.
+ 
+      Alt-                When used in reference to the keyboard, means
+                          the Alt key.  For example, Alt-L means the Alt
+                          L key.  To execute a command labeled Alt-L,
+                          you would first press the Alt key, then,
+                          without releasing it press the L key.  (the
+                          CASE of the character is ignored in Alt key
+                          commands, so that Alt-L and Alt-l are both
+                          interpreted as Alt-L.
+ 
+      Current File        Refers to the file currently being edited.
+                          The editor allows multiple files in memory at
+                          the same time, and there are commands to
+                          switch back and forth between them.
+ 
+      Current Window      The window that the cursor currently resides
+                          in.  In This version of the editor, there may
+                          be two separate 'windows' on the screen,
+                          viewing two separate files.
+ 
+      CursorLine          The line of the current file being edited
+                          where the cursor resides.
+ 
+      EndOfLine           The position immediately following the last
+                          non blank character on a line.  If the line is
+                          blank, then EndOfLine is column one.
+ 
+      F1,F2..F10          Refers to the ten function keys.
+ 
+      FirstOfLine         Column one.
+ 
+      Insert              One of the available editing modes of the
+                          editor.  When in Insert mode, existing text to
+                          the right of the cursor moves to the right
+                          when you enter new text.
+ 
+      Modes               Settings that generally affect the editors
+                          method of operations and particularly affect
+                          many editor commands.  The two currently
+                          supported modes are: Insert and OverWrite.
+                          OverWrite is the default.  The mode can be
+                          toggled (changed) by pressing the Ins key or
+                          ^V.
+ 
+      OverWrite           One of the available editing modes of the
+                          editor.  When in OverWrite mode, all
+                          characters typed 'overlay' any information or
+                          text already appearing in the file.  OverWrite
+                          mode is very similar to typing on a
+                          conventional typewriter.
+ 
+      TopOfScreen         The top line of the screen in the current
+                          window, not including the STATUS line, if it
+                          is displayed.
+ 
+      Word                A sequence of one or more characters composed
+                          of: 0..9, A..Z, a..z and _.  Anything else is
+                          considered a delimiter.
+ 
+ 
+ 
+ 
+      Appendix B) Configuration
+ 
+      What can be configured:
+ 
+      1) Binding of commands to keys
+      2) Screen attributes (colors) for certain parts of the editor
+         display
+      3) Amount of memory NOT to use, or reserve for other tasks.
+      4) Initial Tab Expansion and mode (insert/overwrite) settings.
+      5) QEDIT'S resetting of the cursor size/shape.
+      6) QEDIT'S handling of horizontal and vertical retrace when using
+         a graphic adapter.
+ 
+      QEDIT's configuration is accomplished with the supplied
+      configuration program, QCONFG.  The requirements for running
+      QCONFG are the same as for QEDIT.
+ 
+      NOTE that QCONFG and/or the keyboard configuration files are NOT
+      needed to operate QEDIT, only to configure QEDIT.  Once
+      configuration is complete, these files can be removed from online
+      storage.
+ 
+      There are six parts to QEDIT's configuration:
+ 
+      1) QEDIT allows you to reconfigure the keyboard command format
+         more to your individual tastes.  If you don't like the way
+         QEDIT is supplied, you are free and encouraged to reconfigure
+         it more to your liking.  This is done by supplying the
+         configuration program, QCONFG, with the name of a keyboard
+         definition file.  QCONFG will process this file and change
+         QEDIT accordingly.
+ 
+         Three keyboard definition files are supplied.  The first one,
+         QKEY.DEF, is the default configuration file for QEDIT.  If you
+         change the configuration and decide you want to go back to the
+         original, then just run QCONFG and specify QKEY.DEF as the
+         keyboard definition file and QEDIT will be reconfigured to the
+         default configuration.
+ 
+         The second, WSKEY.DEF, is a keyboard definition file that
+         configures QEDIT to appear similar to the TURBO PASCAL editor
+         or WordStar in non document mode.
+ 
+         The third, MYKEY.DEF, is a keyboard definition file that you
+         can change to configure QEDIT the way you think is best.
+ 
+         Setting up MYKEY.DEF is fairly simple (At least we hope so!
+         Let us know if you have problems or if you have suggestions
+         about making QCONFG easier to use.)  The format of a keyboard
+         definition file is:
+ 
+         Key          command
+ 
+         where
+         -key     is the key to be defined.
+         -command is the command to be executed when that key is
+                  pressed.
+ 
+         Blank lines and lines starting with an asterisk are ignored.
+ 
+         NOTE that ALL keys that you want defined MUST be in your
+         keyboard definition file.  The QCONFG program initializes the
+         keyboard command translation table to undefined for ALL keys,
+         and only defines those keys that are in your keyboard
+         definition file.
+ 
+         MYKEY.DEF contains a list of all the keys that may be used as
+         command keys by QEDIT.  To define a key to issue a particular
+         command, just place the desired command to the right of the
+         desired key.  If you wish to 'un' define a key, then just leave
+         the command part blank.  This is the way MYKEY.DEF comes, so
+         that all command keys are undefined.
+ 
+         For an example, suppose that you wanted to define the F6 key to
+         be the delete line command, and you wanted the F3 key to be
+         undefined.  A simple way to do this would be to: ( *** DENOTE
+         COMMENTS )
+ 
+         1)  Q QKEY.DEF   *** Edit QKEY.DEF
+         2)  *** Find the F3 key definition.
+         3)  *** Delete everything to the right of F3.
+         4)  *** Find the F6 key definition.
+         5)  *** Replace or enter anew the command definition,
+                 DeleteLine.
+         6)  *** Change the file name to MYKEY1.DEF (or whatever you
+                 want to call it) This can be done with the ^KF command.
+         7)  *** Issue the file command, ^KX.
+ 
+         Now, to install your configuration, run QCONFG, when asked for
+         the keyboard definition file give the name of the file you
+         created, save the program, and you've reconfigured QEDIT!
+ 
+         You can also install two key commands.  To do this, you must
+         give the lead in key of your two key sequence the command,
+         TwoKey.  On the next line, you must put the number of two key
+         commands defined for this particular lead in key.  Then, on
+         following lines you put the keys and commands in the normal
+         way.
+ 
+         For examples, see the QKEY.DEF keyboard definition file.
+ 
+         Note that multiple keys may be assigned the same command.  For
+         example, if you so desired, you could have all the function keys
+         issue the FileToSystem command.
+ 
+      2) Reconfiguring the screen attributes.  QCONFG also allows you to
+         change the default attributes for selected portions of the
+         display screen.  These are:
+ 
+         -the Status Line - this is the top line of QEDIT's display
+          where the filename, line number, column, and available memory
+          are displayed.
+         -the Text area - the is the part of the file that you see on
+          the screen.
+         -the Message line - this is the top line of QEDIT's display,
+          shared with the Status Line.
+         -Blocked Text - this is text that has been marked with the
+          MarkLine command.
+         -the CursorLine - this is the line that the cursor resides on.
+ 
+         QCONFG will show you what the different attributes will look
+         like on your display, by number.  Then QCONFG will show you the
+         current values and let you change them if you would like.
+ 
+         When you have set the selectable portions of QEDIT's screen,
+         you can instruct QCONFG to save these values by responding 'Y'
+         to the 'save these values' prompt.
+ 
+      3) Reconfiguring the amount of memory that QEDIT will reserve.
+ 
+         NOTE that memory RESERVED is NOT available for QEDIT's buffer
+         routines, so reserving memory will DECREASE the size of the
+         files that you can edit.
+ 
+         The amount to be entered is the DECIMAL number of PARAGRAPHS
+         (16 bytes) that QEDIT will reserve.  This serves two purposes:
+         a) By default QEDIT allocates all available memory to himself.
+         In a multi-tasking environment that does not partition memory
+         between tasks, then this option can be used to leave memory
+         available for other tasks. b) Since QEDIT allocates all
+         available memory, COMMAND.COM must be reloaded upon exiting
+         QEDIT.  This is hardly noticeable on hard disk systems, but on
+         floppy disk based systems it can be annoying.  Tell QCONFG to
+         reserve 834 paragraphs and COMMAND.COM will not have to be
+         reloaded.  (This applies to PC-DOS 2.1, other versions of DOS
+         may require you to use a higher value to keep COMMAND.COM from
+         being reloaded.)
+ 
+      4) Reconfiguring initial tabs and mode setting.  QCONFG will
+         display the current settings, and give you a chance to change
+         them.
+ 
+      5) QEDIT's resetting of the cursor size/shape.  QEDIT normally
+         sets the overwrite cursor to a blinking underline, and the
+         insert cursor to a blinking double underline (or a small
+         blob).  Upon exit, QEDIT sets the cursor back to the normal
+         underline, blinking cursor.  If you do NOT want QEDIT to
+         change the cursor size/shape, then answer "N" when QCONFG
+         asks you if QEDIT should change the cursor size.
+ 
+      6) QEDIT's handling of horizontal and vertical retrace when used
+         with graphic adapters.  On a computer equipped with a graphic
+         card, QEDIT normally 'turns off' the screen momentarily when
+         it is doing full screen updates.  This causes a small amount
+         of flicker, but can be annoying.  On the newer style graphic
+         cards (such as the EGA, and the cards that come with the
+         Compaq's and the AT&T's 6300) this is not necessary.  To keep
+         QEDIT from doing this, answer "Y" when QCONFG asks you if
+         QEDIT should ignore retrace for color adapters.
+ 
+ 
+ 
+ 
+      Appendix C)  Technical Specifications/Requirements/Limits.
+ 
+      -Source language: Turbo Pascal 73%, Assembler 27%.
+ 
+      -IBM PC specifics:
+       int 10h (the video interrupt)
+       int 16h (the keyboard interrupt)
+       writes directly to screen ram at B800 or B000 (color or
+       monochrome)
+ 
+      QEDIT works ONLY with TRUE ASCII text files.  ASCII text files are
+      produced by most editors (for example, the TURBO PASCAL editor).
+      An ASCII text file will end each line in a Carriage Return and
+      Line Feed characters (hex 0D and 0A, respectively).  The end of
+      the file is marked by a hex 1A.
+ 
+      Maximum line length - 255 characters INCLUDING the CR and LF
+      characters.
+ 
+      Minimum RAM memory required................................128K
+ 
+      Maximum RAM used...........................................640K
+ 
+      Maximum file size - Limited to available memory.
+ 
+      Maximum number of files edited in 'multi-file' mode - 32767 or
+      available memory - which ever comes first.
+ 
+      Minimum Disk Drives required...............................1
+ 
+      Minimum Disk Space required................................36K
+ 
+      FileSpecs can include PATH specifications, for a maximum of 64
+      characters.
+ 
+ 
+ 
+ 
+      Appendix D) Command Summaries
+ 
+      Alphabetical list of commands
+ 
+      ------------------  QEDIT default -------------  WordStar (R)  --
+ 
+      AddLine             F2                           ---
+      Align               ^A                           ---
+      AppendScrBuff       ^BA                          ---
+      BackSpace           BackSpace key                ^H
+      BottomOffile        ^PgDn                        ^QC
+      BottomOfScreen      ^End                         ^QX
+      CopyBlock           Alt-C                        ^KC
+      CursorDown          down arrow key               ^X
+      CursorLeft          left arrow key               ^S
+      CursorRight         right arrow key              ^D
+      CursorUp            up arrow key                 ^E
+      DeleteChar          Del key                      ^G
+      DeleteLeftWord      ^BackSpace                   ---
+      DeleteLine          ^Y                           ^Y
+      DeleteRightWord     ^T                           ^T
+      DeleteToEOL         ^QY                          ^QY
+      DupLine             F4                           ---
+      EditFile            ^KE                          ---
+      EndOfLine           End key                      ^QD
+      Escape              ESC                          ---
+      Exit                ^KD                          ---
+      FileidChange        ^KF                          ---
+      FileToMain          ---                          ^KD
+      FileToSystem        ^KX                          ^KX
+      Find                ^QF                          ^QF
+      FirstOfLine         Home key                     ^QS
+      GExit               Alt-X                        ---
+      GroupDelete         Alt-G                        ^KY
+      HalfPgDn            ---                          ---
+      HalfPgUp            ---                          ---
+      JumpToLine          ^J                           ---
+      KillFile            ^KZ                          ---
+      LoadScrBuff         ^BL                          ---
+      MakeTopOfScreen     F5                           ---
+      MarkLine            Alt-L                        ^KB, ^KK
+      MoveBlock           Alt-M                        ^KV
+      NewLine             ---                          ---
+      NextFile            ^KN                          ---
+      NextWindow          ^ON                          ---
+      OneWindow           ^O1                          ---
+      PgDn                PgDn key                     ^C
+      PgUp                PgUp key                     ^R
+      PQuitToMain         ^KQ                          ^KQ
+      PQuitToSystem       F3                           ---
+      PrevFile            ^KP                          ---
+      PrevWindow          ^OP                          ---
+      QQuit               ---                          ---
+      ReadFile            ^KR                          ^KR
+      RepeatLastFindOrRep ^L                           ^L
+      Replace             ^QA                          ^QA
+      Return              return key                   ---
+      SaveFile            ^KS                          ^KS
+      ScrollDown          ^Z                           ^Z
+      ScrollUp            ^W                           ^W
+      SetTabWidth         ^KT                          ^OI
+      Shell               F9                           ---
+      ShiftLeft           shift-F7                     ---
+      ShiftRight          shift-F8                     ---
+      SplitLine           ^N                           ^N
+      SplitScreen         ^OS                          ---
+      StoreScrBuff        ^BS                          ---
+      TabLeft             shift tab key                ---
+      TabsOut             ^QO                          ---
+      TabRight            tab key                      ^I
+      ToggleAutoIndent    ^QI                          ---
+      ToggleTabsExpand    ^QT                          ---
+      ToggleIns           Ins key                      ^V
+      TopOfFile           ^PgUp                        ^QR
+      TopOfScreen         ^Home                        ^QE
+      UnDoCursorLine      ^QL                          ---
+      UnMarkBlock         Alt-U                        ---
+      WordLeft            ^left arrow                  ^A
+      WordRight           ^right arrow                 ^F
+      WriteBlock          ^KW                          ^KW
+      ZapScrBuff          ^BZ                          ---
+ 
+ 
+ 
+      Commands by key
+ 
+      -----  Function key commands  ------------------------
+      AddDine             F2
+      PQuitToMain         F3
+      DupLine             F4
+      MakeTopOfScreen	  F5
+      Shell               F9
+      ShiftLeft           shift-F7
+      ShiftRight          shift-F8
+ 
+      -----  Ctrd Key commands  ------------------%---------
+      Align               ^A
+      AppendScrBuff       ^BA
+      LoadScrBuff         ^BL
+      StoreScrBuff        ^BS
+      ZapScrBuff          ^BZ
+      JumpToLine          ^J
+      Exit                ^KD
+      EditFile            ^KE
+      FileidChange        ^KF
+      NextFile            ^KN
+      PrevFile            ^KP
+      PQuitToSystem       ^KQ
+

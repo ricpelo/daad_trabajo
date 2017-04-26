@@ -1,0 +1,116 @@
+* Huw Powell's Additions to Keystoke Configuration 16-03-87*
+*
+*******************************
+*  Main differences are :-    *
+*  F1     = TabsOut           *
+*  Alt-F  = Find              *
+*  Alt-T  = Top of Block      *
+*  Alt-B  = Bottom of Block   *
+*  Alt-W  = Write Block       *
+*  Alt-P  = PrevFile          *
+*  Alt-N  = NextFile          *
+*  Alt-S  = SplitScreen       *
+*  Alt-O  = OneWindow         *
+*  Ctrl-P = PrevWindow        *
+*  Ctrl-N = NextWindow        *
+*  Ctrl-X = Exit With Write   *
+*******************************
+*
+      ---- Cursor movement commands -----------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      BottomOfScreen      ^End
+      CursorDown          down arrow key
+      CursorLeft          left arrow key
+      CursorRight         right arrow key
+      CursorUp            up arrow key
+      EndOfLine           End key
+      FirstOfLine         Home key
+      NewLine             ---
+      Return              return key
+      TabLeft             shift tab key
+      TabRight            tab key
+      TopOfScreen         ^Home
+      WordLeft            ^left arrow
+      WordRight           ^right arrow
+ 
+      ---- Scroll (move screen) commands ------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      BottomOffile        ^PgDn
+      HalfPgDn            ---
+      HalfPgUp            ---
+      JumpToLine          ^J
+      LastPlace           ^P
+      MakeTopOfScreen     F5
+      PgDn                PgDn key
+      PgUp                PgUp key
+      ScrollDown          ^Z
+      ScrollUp            ^W
+      TopOfFile           ^PgUp
+ 
+      ---- Delete and Insert commands ---------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      AddLine             F2
+      Align               ^A
+      BackSpace           BackSpace key
+      DeleteChar          Del key
+      DeleteLine          ^Y
+      DeleteRightWord     ^T
+      DeleteToEOL         ^QY
+      DupLine             F4
+      Return              return key
+      SplitLine           ^N
+      ShiftLeft           shift F7
+      ShiftRight          shift F8
+ 
+      ---- Find and Replace commands ----------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      Find                ^QF
+      RepeatLastFindOrRep ^L
+      Replace             ^QA
+ 
+      ---- File commands ----------------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      EditFile            ^KE
+      Exit                ^KD
+      FileidChange        ^KF
+      FileToMain          ---
+      FileToSystem        ^KX
+      KillFile            ^KZ
+      NextFile            ^KN
+      PQuitToMain         ^KQ
+      PQuitToSystem       F3
+      PrevFile            ^KP
+      QQuit               ---
+      ReadFile            ^KR
+      SaveFile            ^KS
+      WriteBlock          ^KW
+ 
+      ---- Block commands ---------------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      CopyBlock           Alt-C
+      GroupDelete         Alt-G
+      MarkLine            Alt-L
+      MoveBlock           Alt-M
+      UnMarkBlock         Alt-U
+      WriteBlock          ^KW
+ 
+      ---- Scratch Buffer commands ------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      LoadScrBuff         ^BL
+      StoreScrBuff        ^BS
+      ZapScrBuff          ^BZ
+ 
+      ---- Windowing commands -----------------------
+      SplitScreen         ^OS
+      OneWindow           ^O1
+      NextWindow          ^ON
+      PrevWindow          ^OP
+ 
+      ---- Miscellaneous commands -------------------
+      COMMAND             KEYSTROKE (--- denotes NOT pre-installed)
+      Escape              ESC
+      Shell               F9
+      ToggleTabsExpand    ^QT
+      ToggleIns           Ins key
+      UnDoCursorLine      ^QL
+

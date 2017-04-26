@@ -1,0 +1,221 @@
+^BackSpace   DeleteLeftWord
+*
+*  This is a WordStar (R) 'look-a-like' configuration file for QEDIT.
+*  Specially configured for Huw H. Powell 16th March 1987
+*  And for T.J. Gilberts 17 June 1987
+*
+*********************************
+*  Main differences are :-      *
+*  F1     = TabsOut             *
+*  Alt-F  = Find                *
+*  Alt-T  = Top of Block        *
+*  Alt-B  = Bottom of Block     *
+*  Alt-W  = Write Block         *
+*  Alt-P  = PrevFile            *
+*  Alt-N  = NextFile            *
+*  Alt-S  = SplitScreen         *
+*  Alt-O  = OneWindow           *
+*  Ctrl-P = PrevWindow          *
+*  Ctrl-N = NextWindow          *
+*  Ctrl-X = Exit With Write     *
+*  Ctrl-Home = Top of file      *
+*  Ctrl-PgUp = Top of screen    *
+*  Ctrl-End  = End of file      *
+*  Ctrl-Pgdn = Bottom of screen *
+*********************************
+*  Shift-Tab = TabRight 	*
+*********************************
+*
+^A           WordLeft
+*
+* start of a TwoKey block
+*
+^B           TwoKey
+4
+A            AppendScrBuff
+L            LoadScrBuff
+S            StoreScrBuff
+Z            ZapScrBuff
+*
+* return to single key commands
+*
+^C           PgDn
+^D           GroupDelete
+^E           CursorUp
+^F           WordRight
+^G           DeleteChar
+^H           BackSpace
+BackSpace    BackSpace
+^I           TabRight
+Tab          TabRight
+^J           JumpToLine
+*
+* start of a TwoKey block
+*
+^K           TwoKey
+17
+B            MarkLine
+C            CopyBlock
+D            FileToMain
+E            EditFile
+F            FileidChange
+K            MarkLine
+N            NextFile
+P            PrevFile
+Q            PQuitToSystem
+R            ReadFile
+S            SaveFile
+T            SetTabWidth
+V            MoveBlock
+W            WriteBlock
+X            FileToSystem
+Y            GroupDelete
+Z            KillFile
+*
+* return to single key commands
+*
+^L           RepLastFindOrRepl
+^M           Splitline
+Return       Return
+^N           NextWindow
+*
+^O           TwoKey
+4
+N            NextWindow
+O            OneWindow
+P            PrevWindow
+S            SplitScreen
+*
+^P           PrevWindow
+*
+* start of a TwoKey block
+*
+^Q           TwoKey
+13
+A            Replace
+C            BottomOfFile
+D            EndOfLine
+E            TopOfScreen
+F            Find
+I            ToggleAutoIndent
+L            UnDoCursorLine
+P
+R            TopOfFile
+S            FirstOfLine
+T            ToggleTabsExpand
+X            BottomOfScreen
+Y            DeleteToEOL
+*
+* return to single key commands
+*
+^R           PgUp
+^S           SaveFile
+^T           DeleteRightWord
+^U
+^V           ToggleIns
+^W           ScrollUp
+^X           FileToSystem
+^Y           DeleteLine
+^Z           ScrollDown
+Esc          Escape
+^\
+^]
+^6
+^-
+^2
+Shift-Tab    TabRight
+Alt-Q        Exit
+Alt-W        WriteBlock
+Alt-E        EditFile
+Alt-R        Readfile
+Alt-T        MarkLine
+Alt-Y
+Alt-U        UnMarkBlock
+Alt-I
+Alt-O        OneWindow
+Alt-P        PrevFile
+Alt-A        Align
+Alt-S        SplitScreen
+Alt-D        DeleteLine
+Alt-F        Find
+Alt-G        GroupDelete
+Alt-H
+Alt-J
+Alt-K
+Alt-L        MarkLine
+Alt-Z
+Alt-X        GExit
+Alt-C        CopyBlock
+Alt-V
+Alt-B        MarkLine
+Alt-N        NextFile
+Alt-M        MoveBlock
+F1           TabsOut
+F2           AddLine
+F3           PQuitToMain
+F4           DupLine
+F5           MakeTopOfScreen
+F6           DeleteToEOL
+F7
+F8
+F9           Shell
+F10
+Home         FirstOfLine
+UpArrow      CursorUp
+PgUp         PgUp
+LeftArrow    CursorLeft
+RightArrow   CursorRight
+End          EndOfLine
+DownArrow    CursorDown
+PgDn         PgDn
+Ins          ToggleIns
+Del          DeleteChar
+Shift-F1
+Shift-F2
+Shift-F3
+Shift-F4
+Shift-F5
+Shift-F6
+Shift-F7           ShiftLeft
+Shift-F8           ShiftRight
+Shift-F9
+Shift-F10
+^F1
+^F2
+^F3
+^F4
+^F5
+^F6
+^F7
+^F8
+^F9
+^F10
+Alt-F1
+Alt-F2
+Alt-F3
+Alt-F4
+Alt-F5
+Alt-F6
+Alt-F7
+Alt-F8
+Alt-F9
+Alt-F10
+^LeftArrow   WordLeft
+^RightArrow  WordRight
+^End         BottomOfFile
+^PgDn        BottomOfScreen
+^Home        TopOfFile
+Alt-1
+Alt-2
+Alt-3
+Alt-4
+Alt-5
+Alt-6
+Alt-7
+Alt-8
+Alt-9
+Alt-0
+Alt--
+Alt-=
+^PgUp        TopOfScreen
+
