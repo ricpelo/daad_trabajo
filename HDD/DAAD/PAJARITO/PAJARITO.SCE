@@ -581,4 +581,3 @@ _       _       RESET                   ; Objetos a su loc. inicial / Flag 1
                 SET     CPAdject
                 GOTO    1               ; Primera localidad del juego
 
-
